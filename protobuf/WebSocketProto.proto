@@ -1,0 +1,87 @@
+package com.treegger.protobuf;
+
+message WebSocketMessage 
+{
+ 	optional AuthenticateRequest authenticateRequest = 2;
+	optional AuthenticateResponse authenticateResponse = 3;
+	
+	optional BindRequest bindRequest = 4;
+	optional BindResponse bindResponse = 5;
+	
+	optional Roster roster = 6;
+	
+	optional Presence presence = 7;
+	
+	optional TextMessage textMessage = 8;
+	
+}
+
+message Error
+{
+	required uint32 code = 1;
+	optional string description = 2;
+}
+
+message AuthenticateRequest
+{
+	required string username = 1;
+	required string password = 2;
+	required string resource = 3;
+}
+message AuthenticateResponse
+{
+	optional string sessionId = 1;
+}
+message BindRequest
+{
+	required string sessionId = 1;
+}
+message BindResponse
+{
+	optional string sessionId = 1;
+}
+
+
+message Roster
+{
+	repeated RosterItem item = 1;
+	
+}
+
+message RosterItem
+{
+ 	required string name  = 1;
+ 	required string jid = 2;
+	required string subscription = 3;
+	required string itemGroup = 4;
+}
+
+
+message Presence
+{
+	required string from = 1;
+	optional string type = 2;
+	optional string show = 3;
+	optional string status = 4;
+}
+
+message TextMessage
+{
+	optional string id = 1;
+
+	optional string toUser = 2;
+	optional string fromUser = 3;    
+    optional string type =  4;
+    
+    
+    optional string subject = 5;
+    optional string body = 6;
+    optional string thread = 7;
+    
+    optional bool active = 8;
+    optional bool composing = 9;
+    optional bool paused = 10;
+    optional bool inactive = 11;
+    optional bool gone = 12;
+
+}
