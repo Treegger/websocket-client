@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+</head>
+<body>
+<center>
+<h2>Basic WS client</h2>
+
+<script type="text/javascript" src="../commons/protobuf.js"></script>
+<script type="text/javascript" src="../commons/WebSocketMessageProtobuf-1.0.js"></script>
+<script>
+
+var conn = new WebSocket("wss://xmpp.treeger.com/tg-1.0/b64")
+
+conn.onopen = function(evt) 
+{
+	document.getElementById( "textOuput" ).value += "Open" +'\n'
+}
+
+
+conn.onmessage = function(event) 
+{ 
+	var wsMsg = new com.treegger.protobuf.WebSocketMessage;
+	wsMsg.ParseFromStream( new PROTO.Base64Stream( event.data ) );
+	document.getElementById( "textOuput" ).value += wsMsg.toString() +'\n'
+	
+}
+	
+conn.onclose = function(evt) 
+{
+	document.getElementById( "textOuput" ).value += "Closed" +'\n' 
+}
+
+function authenticate( username, password, resource )
+{
+	
+
+	var authReqMsg = new com.treegger.protobuf.AuthenticateRequest;
+	authReqMsg.username = username
+	authReqMsg.password = password
+	authReqMsg.resource = resource
+
+	var wsMsg = new com.treegger.protobuf.WebSocketMessage;
+	wsMsg.authenticateRequest = authReqMsg
+	
+	var serialized = new PROTO.Base64Stream;
+	wsMsg.SerializeToStream(serialized);
+	conn.send(serialized.getString());
+
+}
+
+</script>
+<input type="text" id="usernameInput"/><input type="text" id="passwordInput"/>  
+<button onClick="authenticate( document.getElementById( 'usernameInput' ).value, document.getElementById( 'passwordInput' ).value, 'web' )">Login</button>
+<button onClick="conn.close();"> Disconnect </button>
+</center>
+<p align="center">
+<textarea cols="80" rows="20" id="textOuput"></textarea>
+</p>
+</body>
+</html>
