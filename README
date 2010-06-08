@@ -1,0 +1,14 @@
+Treegger WebSocket Client Tools
+
+=== Java ===
+
+java folder contains a simple Java Websocket client
+
+=== Protobuf ===
+
+protobuf folder contains simple WebSocket protobuf ( see http://code.google.com/p/protobuf/ )  message description. 
+You have to compile this file with protobuf tools to generate de/serializer sources.
+
+=== Web ===
+
+This folder contains simple web client example using websocket and protobuf
