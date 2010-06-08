@@ -1,0 +1,3 @@
+Protobuf required: 
+- Google Protobuf http://code.google.com/p/protobuf/ to generate C++/Java sources
+- Protojs http://github.com/sirikata/protojs to generate JS sources 
