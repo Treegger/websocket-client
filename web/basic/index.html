@@ -1,40 +1,76 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<title>Basic WS client</title>
 </head>
 <body>
-<center>
 <h2>Basic WS client</h2>
 
 <script type="text/javascript" src="../commons/protobuf.js"></script>
 <script type="text/javascript" src="../commons/WebSocketMessageProtobuf-1.0.js"></script>
 <script>
 
-var conn = new WebSocket("wss://xmpp.treeger.com/tg-1.0/b64")
-
-conn.onopen = function(evt) 
+if ("WebSocket" in window)
 {
-	document.getElementById( "textOuput" ).value += "Open" +'\n'
+	var conn = new WebSocket("wss://localhost:8443/tg-1.0/b64")
+	
+	
+	
+	conn.onopen = function(evt) 
+	{
+		document.getElementById( "textOuput" ).value += "Open" +'\n'
+	}
+	
+	
+	conn.onmessage = function(event) 
+	{ 
+		var wsMsg = new com.treegger.protobuf.WebSocketMessage;
+		wsMsg.ParseFromStream( new PROTO.Base64Stream( event.data ) );
+		document.getElementById( "textOuput" ).value += wsMsg.toString() +'\n'
+		
+	}
+	
+	
+	conn.onerror = function(event) 
+	{
+		document.getElementById( "textOuput" ).value += "Error: " + e + '\n'  
+	}
+		
+	conn.onclose = function(evt) 
+	{
+		document.getElementById( "textOuput" ).value += "Closed" +'\n' 
+	}
+
+
+	setInterval( ping, 30000 );
+
+}
+else
+{
+    alert("WebSocket NOT supported\r\n\r\nBrowser: " + navigator.appName + " " + navigator.appVersion );
 }
 
 
-conn.onmessage = function(event) 
-{ 
+function sendWebSocketMessage( wsMessage  )
+{
+	var serialized = new PROTO.Base64Stream;
+	wsMessage.SerializeToStream(serialized);
+	conn.send(serialized.getString());
+}
+
+var pingId = 0;
+function ping()
+{
+	var pingMsg = new com.treegger.protobuf.Ping;
+	pingMsg.id = pingId.toString();
+	pingId++;
 	var wsMsg = new com.treegger.protobuf.WebSocketMessage;
-	wsMsg.ParseFromStream( new PROTO.Base64Stream( event.data ) );
-	document.getElementById( "textOuput" ).value += wsMsg.toString() +'\n'
-	
-}
-	
-conn.onclose = function(evt) 
-{
-	document.getElementById( "textOuput" ).value += "Closed" +'\n' 
+	wsMsg.ping = pingMsg;
+	sendWebSocketMessage( wsMsg );
 }
 
 function authenticate( username, password, resource )
 {
-	
-
 	var authReqMsg = new com.treegger.protobuf.AuthenticateRequest;
 	authReqMsg.username = username
 	authReqMsg.password = password
@@ -43,17 +79,59 @@ function authenticate( username, password, resource )
 	var wsMsg = new com.treegger.protobuf.WebSocketMessage;
 	wsMsg.authenticateRequest = authReqMsg
 	
-	var serialized = new PROTO.Base64Stream;
-	wsMsg.SerializeToStream(serialized);
-	conn.send(serialized.getString());
-
+	sendWebSocketMessage( wsMsg );
 }
 
+
+
+function sendMessage( to, text )
+{
+	var textMsg = new com.treegger.protobuf.TextMessage;
+	textMsg.toUser = to
+	textMsg.body = text
+
+	var wsMsg = new com.treegger.protobuf.WebSocketMessage;
+	wsMsg.textMessage = textMsg
+	
+	sendWebSocketMessage( wsMsg );
+}
+
+
 </script>
-<input type="text" id="usernameInput"/><input type="text" id="passwordInput"/>  
+
+
+<table border="0" align="center">
+
+<tr>
+<td>Login</td>
+<td>
+<input type="text" id="usernameInput" value="username@twitter"/> Password <input type="password" id="passwordInput" />
 <button onClick="authenticate( document.getElementById( 'usernameInput' ).value, document.getElementById( 'passwordInput' ).value, 'web' )">Login</button>
-<button onClick="conn.close();"> Disconnect </button>
-</center>
+</td>
+</tr>
+
+<tr>
+<td>Send Message</td>
+<td>
+<input type="text" id="textMessageInput"/> To <input type="text" id="toInput" value="username@twitter/resource"/>
+<button onClick="sendMessage( document.getElementById( 'toInput' ).value, document.getElementById( 'textMessageInput' ).value )">Send</button>
+</td>
+</tr>
+
+
+
+<tr>
+<td>Disconnect</td>
+<td>
+<button onClick="conn.close();">Disconnect</button>
+</td>
+</tr>
+
+
+
+</table>
+  
+
 <p align="center">
 <textarea cols="80" rows="20" id="textOuput"></textarea>
 </p>

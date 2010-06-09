@@ -3,6 +3,12 @@ if (typeof(com.treegger)=="undefined") {com.treegger = {};}
 if (typeof(com.treegger.protobuf)=="undefined") {com.treegger.protobuf = {};}
 
 com.treegger.protobuf.WebSocketMessage = PROTO.Message("com.treegger.protobuf.WebSocketMessage",{
+	ping: {
+		options: {},
+		multiplicity: PROTO.optional,
+		type: function(){return com.treegger.protobuf.Ping;},
+		id: 1
+	},
 	authenticateRequest: {
 		options: {},
 		multiplicity: PROTO.optional,
@@ -58,6 +64,13 @@ com.treegger.protobuf.Error = PROTO.Message("com.treegger.protobuf.Error",{
 		type: function(){return PROTO.string;},
 		id: 2
 	}});
+com.treegger.protobuf.Ping = PROTO.Message("com.treegger.protobuf.Ping",{
+	id: {
+		options: {},
+		multiplicity: PROTO.optional,
+		type: function(){return PROTO.string;},
+		id: 1
+	}});
 com.treegger.protobuf.AuthenticateRequest = PROTO.Message("com.treegger.protobuf.AuthenticateRequest",{
 	username: {
 		options: {},
@@ -78,11 +91,23 @@ com.treegger.protobuf.AuthenticateRequest = PROTO.Message("com.treegger.protobuf
 		id: 3
 	}});
 com.treegger.protobuf.AuthenticateResponse = PROTO.Message("com.treegger.protobuf.AuthenticateResponse",{
+	username: {
+		options: {},
+		multiplicity: PROTO.required,
+		type: function(){return PROTO.string;},
+		id: 1
+	},
 	sessionId: {
 		options: {},
 		multiplicity: PROTO.optional,
 		type: function(){return PROTO.string;},
-		id: 1
+		id: 2
+	},
+	errorMessage: {
+		options: {},
+		multiplicity: PROTO.optional,
+		type: function(){return PROTO.string;},
+		id: 3
 	}});
 com.treegger.protobuf.BindRequest = PROTO.Message("com.treegger.protobuf.BindRequest",{
 	sessionId: {
