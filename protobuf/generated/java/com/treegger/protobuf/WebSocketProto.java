@@ -35,6 +35,13 @@ public final class WebSocketProto {
       return com.treegger.protobuf.WebSocketProto.internal_static_com_treegger_protobuf_WebSocketMessage_fieldAccessorTable;
     }
     
+    // optional .com.treegger.protobuf.Ping ping = 1;
+    public static final int PING_FIELD_NUMBER = 1;
+    private boolean hasPing;
+    private com.treegger.protobuf.WebSocketProto.Ping ping_;
+    public boolean hasPing() { return hasPing; }
+    public com.treegger.protobuf.WebSocketProto.Ping getPing() { return ping_; }
+    
     // optional .com.treegger.protobuf.AuthenticateRequest authenticateRequest = 2;
     public static final int AUTHENTICATEREQUEST_FIELD_NUMBER = 2;
     private boolean hasAuthenticateRequest;
@@ -85,6 +92,7 @@ public final class WebSocketProto {
     public com.treegger.protobuf.WebSocketProto.TextMessage getTextMessage() { return textMessage_; }
     
     private void initFields() {
+      ping_ = com.treegger.protobuf.WebSocketProto.Ping.getDefaultInstance();
       authenticateRequest_ = com.treegger.protobuf.WebSocketProto.AuthenticateRequest.getDefaultInstance();
       authenticateResponse_ = com.treegger.protobuf.WebSocketProto.AuthenticateResponse.getDefaultInstance();
       bindRequest_ = com.treegger.protobuf.WebSocketProto.BindRequest.getDefaultInstance();
@@ -96,6 +104,9 @@ public final class WebSocketProto {
     public final boolean isInitialized() {
       if (hasAuthenticateRequest()) {
         if (!getAuthenticateRequest().isInitialized()) return false;
+      }
+      if (hasAuthenticateResponse()) {
+        if (!getAuthenticateResponse().isInitialized()) return false;
       }
       if (hasBindRequest()) {
         if (!getBindRequest().isInitialized()) return false;
@@ -112,6 +123,9 @@ public final class WebSocketProto {
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
+      if (hasPing()) {
+        output.writeMessage(1, getPing());
+      }
       if (hasAuthenticateRequest()) {
         output.writeMessage(2, getAuthenticateRequest());
       }
@@ -142,6 +156,10 @@ public final class WebSocketProto {
       if (size != -1) return size;
     
       size = 0;
+      if (hasPing()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, getPing());
+      }
       if (hasAuthenticateRequest()) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(2, getAuthenticateRequest());
@@ -328,6 +346,9 @@ public final class WebSocketProto {
       
       public Builder mergeFrom(com.treegger.protobuf.WebSocketProto.WebSocketMessage other) {
         if (other == com.treegger.protobuf.WebSocketProto.WebSocketMessage.getDefaultInstance()) return this;
+        if (other.hasPing()) {
+          mergePing(other.getPing());
+        }
         if (other.hasAuthenticateRequest()) {
           mergeAuthenticateRequest(other.getAuthenticateRequest());
         }
@@ -372,6 +393,15 @@ public final class WebSocketProto {
                 this.setUnknownFields(unknownFields.build());
                 return this;
               }
+              break;
+            }
+            case 10: {
+              com.treegger.protobuf.WebSocketProto.Ping.Builder subBuilder = com.treegger.protobuf.WebSocketProto.Ping.newBuilder();
+              if (hasPing()) {
+                subBuilder.mergeFrom(getPing());
+              }
+              input.readMessage(subBuilder, extensionRegistry);
+              setPing(subBuilder.buildPartial());
               break;
             }
             case 18: {
@@ -441,6 +471,43 @@ public final class WebSocketProto {
         }
       }
       
+      
+      // optional .com.treegger.protobuf.Ping ping = 1;
+      public boolean hasPing() {
+        return result.hasPing();
+      }
+      public com.treegger.protobuf.WebSocketProto.Ping getPing() {
+        return result.getPing();
+      }
+      public Builder setPing(com.treegger.protobuf.WebSocketProto.Ping value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        result.hasPing = true;
+        result.ping_ = value;
+        return this;
+      }
+      public Builder setPing(com.treegger.protobuf.WebSocketProto.Ping.Builder builderForValue) {
+        result.hasPing = true;
+        result.ping_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergePing(com.treegger.protobuf.WebSocketProto.Ping value) {
+        if (result.hasPing() &&
+            result.ping_ != com.treegger.protobuf.WebSocketProto.Ping.getDefaultInstance()) {
+          result.ping_ =
+            com.treegger.protobuf.WebSocketProto.Ping.newBuilder(result.ping_).mergeFrom(value).buildPartial();
+        } else {
+          result.ping_ = value;
+        }
+        result.hasPing = true;
+        return this;
+      }
+      public Builder clearPing() {
+        result.hasPing = false;
+        result.ping_ = com.treegger.protobuf.WebSocketProto.Ping.getDefaultInstance();
+        return this;
+      }
       
       // optional .com.treegger.protobuf.AuthenticateRequest authenticateRequest = 2;
       public boolean hasAuthenticateRequest() {
@@ -1040,6 +1107,293 @@ public final class WebSocketProto {
     // @@protoc_insertion_point(class_scope:com.treegger.protobuf.Error)
   }
   
+  public static final class Ping extends
+      com.google.protobuf.GeneratedMessage {
+    // Use Ping.newBuilder() to construct.
+    private Ping() {
+      initFields();
+    }
+    private Ping(boolean noInit) {}
+    
+    private static final Ping defaultInstance;
+    public static Ping getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public Ping getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.treegger.protobuf.WebSocketProto.internal_static_com_treegger_protobuf_Ping_descriptor;
+    }
+    
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.treegger.protobuf.WebSocketProto.internal_static_com_treegger_protobuf_Ping_fieldAccessorTable;
+    }
+    
+    // optional string id = 1;
+    public static final int ID_FIELD_NUMBER = 1;
+    private boolean hasId;
+    private java.lang.String id_ = "";
+    public boolean hasId() { return hasId; }
+    public java.lang.String getId() { return id_; }
+    
+    private void initFields() {
+    }
+    public final boolean isInitialized() {
+      return true;
+    }
+    
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      if (hasId()) {
+        output.writeString(1, getId());
+      }
+      getUnknownFields().writeTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+    
+      size = 0;
+      if (hasId()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeStringSize(1, getId());
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+    
+    public static com.treegger.protobuf.WebSocketProto.Ping parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.treegger.protobuf.WebSocketProto.Ping parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.treegger.protobuf.WebSocketProto.Ping parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.treegger.protobuf.WebSocketProto.Ping parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.treegger.protobuf.WebSocketProto.Ping parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.treegger.protobuf.WebSocketProto.Ping parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.treegger.protobuf.WebSocketProto.Ping parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static com.treegger.protobuf.WebSocketProto.Ping parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static com.treegger.protobuf.WebSocketProto.Ping parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.treegger.protobuf.WebSocketProto.Ping parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(com.treegger.protobuf.WebSocketProto.Ping prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+    
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> {
+      private com.treegger.protobuf.WebSocketProto.Ping result;
+      
+      // Construct using com.treegger.protobuf.WebSocketProto.Ping.newBuilder()
+      private Builder() {}
+      
+      private static Builder create() {
+        Builder builder = new Builder();
+        builder.result = new com.treegger.protobuf.WebSocketProto.Ping();
+        return builder;
+      }
+      
+      protected com.treegger.protobuf.WebSocketProto.Ping internalGetResult() {
+        return result;
+      }
+      
+      public Builder clear() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "Cannot call clear() after build().");
+        }
+        result = new com.treegger.protobuf.WebSocketProto.Ping();
+        return this;
+      }
+      
+      public Builder clone() {
+        return create().mergeFrom(result);
+      }
+      
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.treegger.protobuf.WebSocketProto.Ping.getDescriptor();
+      }
+      
+      public com.treegger.protobuf.WebSocketProto.Ping getDefaultInstanceForType() {
+        return com.treegger.protobuf.WebSocketProto.Ping.getDefaultInstance();
+      }
+      
+      public boolean isInitialized() {
+        return result.isInitialized();
+      }
+      public com.treegger.protobuf.WebSocketProto.Ping build() {
+        if (result != null && !isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return buildPartial();
+      }
+      
+      private com.treegger.protobuf.WebSocketProto.Ping buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        if (!isInitialized()) {
+          throw newUninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return buildPartial();
+      }
+      
+      public com.treegger.protobuf.WebSocketProto.Ping buildPartial() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "build() has already been called on this Builder.");
+        }
+        com.treegger.protobuf.WebSocketProto.Ping returnMe = result;
+        result = null;
+        return returnMe;
+      }
+      
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.treegger.protobuf.WebSocketProto.Ping) {
+          return mergeFrom((com.treegger.protobuf.WebSocketProto.Ping)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+      
+      public Builder mergeFrom(com.treegger.protobuf.WebSocketProto.Ping other) {
+        if (other == com.treegger.protobuf.WebSocketProto.Ping.getDefaultInstance()) return this;
+        if (other.hasId()) {
+          setId(other.getId());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+      
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder(
+            this.getUnknownFields());
+        while (true) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              this.setUnknownFields(unknownFields.build());
+              return this;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                this.setUnknownFields(unknownFields.build());
+                return this;
+              }
+              break;
+            }
+            case 10: {
+              setId(input.readString());
+              break;
+            }
+          }
+        }
+      }
+      
+      
+      // optional string id = 1;
+      public boolean hasId() {
+        return result.hasId();
+      }
+      public java.lang.String getId() {
+        return result.getId();
+      }
+      public Builder setId(java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  result.hasId = true;
+        result.id_ = value;
+        return this;
+      }
+      public Builder clearId() {
+        result.hasId = false;
+        result.id_ = getDefaultInstance().getId();
+        return this;
+      }
+      
+      // @@protoc_insertion_point(builder_scope:com.treegger.protobuf.Ping)
+    }
+    
+    static {
+      defaultInstance = new Ping(true);
+      com.treegger.protobuf.WebSocketProto.internalForceInit();
+      defaultInstance.initFields();
+    }
+    
+    // @@protoc_insertion_point(class_scope:com.treegger.protobuf.Ping)
+  }
+  
   public static final class AuthenticateRequest extends
       com.google.protobuf.GeneratedMessage {
     // Use AuthenticateRequest.newBuilder() to construct.
@@ -1441,24 +1795,45 @@ public final class WebSocketProto {
       return com.treegger.protobuf.WebSocketProto.internal_static_com_treegger_protobuf_AuthenticateResponse_fieldAccessorTable;
     }
     
-    // optional string sessionId = 1;
-    public static final int SESSIONID_FIELD_NUMBER = 1;
+    // required string username = 1;
+    public static final int USERNAME_FIELD_NUMBER = 1;
+    private boolean hasUsername;
+    private java.lang.String username_ = "";
+    public boolean hasUsername() { return hasUsername; }
+    public java.lang.String getUsername() { return username_; }
+    
+    // optional string sessionId = 2;
+    public static final int SESSIONID_FIELD_NUMBER = 2;
     private boolean hasSessionId;
     private java.lang.String sessionId_ = "";
     public boolean hasSessionId() { return hasSessionId; }
     public java.lang.String getSessionId() { return sessionId_; }
     
+    // optional string errorMessage = 3;
+    public static final int ERRORMESSAGE_FIELD_NUMBER = 3;
+    private boolean hasErrorMessage;
+    private java.lang.String errorMessage_ = "";
+    public boolean hasErrorMessage() { return hasErrorMessage; }
+    public java.lang.String getErrorMessage() { return errorMessage_; }
+    
     private void initFields() {
     }
     public final boolean isInitialized() {
+      if (!hasUsername) return false;
       return true;
     }
     
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
+      if (hasUsername()) {
+        output.writeString(1, getUsername());
+      }
       if (hasSessionId()) {
-        output.writeString(1, getSessionId());
+        output.writeString(2, getSessionId());
+      }
+      if (hasErrorMessage()) {
+        output.writeString(3, getErrorMessage());
       }
       getUnknownFields().writeTo(output);
     }
@@ -1469,9 +1844,17 @@ public final class WebSocketProto {
       if (size != -1) return size;
     
       size = 0;
+      if (hasUsername()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeStringSize(1, getUsername());
+      }
       if (hasSessionId()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(1, getSessionId());
+          .computeStringSize(2, getSessionId());
+      }
+      if (hasErrorMessage()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeStringSize(3, getErrorMessage());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -1631,8 +2014,14 @@ public final class WebSocketProto {
       
       public Builder mergeFrom(com.treegger.protobuf.WebSocketProto.AuthenticateResponse other) {
         if (other == com.treegger.protobuf.WebSocketProto.AuthenticateResponse.getDefaultInstance()) return this;
+        if (other.hasUsername()) {
+          setUsername(other.getUsername());
+        }
         if (other.hasSessionId()) {
           setSessionId(other.getSessionId());
+        }
+        if (other.hasErrorMessage()) {
+          setErrorMessage(other.getErrorMessage());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -1660,7 +2049,15 @@ public final class WebSocketProto {
               break;
             }
             case 10: {
+              setUsername(input.readString());
+              break;
+            }
+            case 18: {
               setSessionId(input.readString());
+              break;
+            }
+            case 26: {
+              setErrorMessage(input.readString());
               break;
             }
           }
@@ -1668,7 +2065,28 @@ public final class WebSocketProto {
       }
       
       
-      // optional string sessionId = 1;
+      // required string username = 1;
+      public boolean hasUsername() {
+        return result.hasUsername();
+      }
+      public java.lang.String getUsername() {
+        return result.getUsername();
+      }
+      public Builder setUsername(java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  result.hasUsername = true;
+        result.username_ = value;
+        return this;
+      }
+      public Builder clearUsername() {
+        result.hasUsername = false;
+        result.username_ = getDefaultInstance().getUsername();
+        return this;
+      }
+      
+      // optional string sessionId = 2;
       public boolean hasSessionId() {
         return result.hasSessionId();
       }
@@ -1686,6 +2104,27 @@ public final class WebSocketProto {
       public Builder clearSessionId() {
         result.hasSessionId = false;
         result.sessionId_ = getDefaultInstance().getSessionId();
+        return this;
+      }
+      
+      // optional string errorMessage = 3;
+      public boolean hasErrorMessage() {
+        return result.hasErrorMessage();
+      }
+      public java.lang.String getErrorMessage() {
+        return result.getErrorMessage();
+      }
+      public Builder setErrorMessage(java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  result.hasErrorMessage = true;
+        result.errorMessage_ = value;
+        return this;
+      }
+      public Builder clearErrorMessage() {
+        result.hasErrorMessage = false;
+        result.errorMessage_ = getDefaultInstance().getErrorMessage();
         return this;
       }
       
@@ -4186,6 +4625,11 @@ public final class WebSocketProto {
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_treegger_protobuf_Error_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_treegger_protobuf_Ping_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_com_treegger_protobuf_Ping_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_treegger_protobuf_AuthenticateRequest_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
@@ -4235,34 +4679,36 @@ public final class WebSocketProto {
   static {
     java.lang.String[] descriptorData = {
       "\n\024WebSocketProto.proto\022\025com.treegger.pro" +
-      "tobuf\"\265\003\n\020WebSocketMessage\022G\n\023authentica" +
-      "teRequest\030\002 \001(\0132*.com.treegger.protobuf." +
-      "AuthenticateRequest\022I\n\024authenticateRespo" +
-      "nse\030\003 \001(\0132+.com.treegger.protobuf.Authen" +
-      "ticateResponse\0227\n\013bindRequest\030\004 \001(\0132\".co" +
-      "m.treegger.protobuf.BindRequest\0229\n\014bindR" +
-      "esponse\030\005 \001(\0132#.com.treegger.protobuf.Bi" +
-      "ndResponse\022-\n\006roster\030\006 \001(\0132\035.com.treegge" +
-      "r.protobuf.Roster\0221\n\010presence\030\007 \001(\0132\037.co",
-      "m.treegger.protobuf.Presence\0227\n\013textMess" +
-      "age\030\010 \001(\0132\".com.treegger.protobuf.TextMe" +
-      "ssage\"*\n\005Error\022\014\n\004code\030\001 \002(\r\022\023\n\013descript" +
-      "ion\030\002 \001(\t\"K\n\023AuthenticateRequest\022\020\n\010user" +
-      "name\030\001 \002(\t\022\020\n\010password\030\002 \002(\t\022\020\n\010resource" +
-      "\030\003 \002(\t\")\n\024AuthenticateResponse\022\021\n\tsessio" +
-      "nId\030\001 \001(\t\" \n\013BindRequest\022\021\n\tsessionId\030\001 " +
-      "\002(\t\"!\n\014BindResponse\022\021\n\tsessionId\030\001 \001(\t\"9" +
-      "\n\006Roster\022/\n\004item\030\001 \003(\0132!.com.treegger.pr" +
-      "otobuf.RosterItem\"P\n\nRosterItem\022\014\n\004name\030",
-      "\001 \002(\t\022\013\n\003jid\030\002 \002(\t\022\024\n\014subscription\030\003 \002(\t" +
-      "\022\021\n\titemGroup\030\004 \002(\t\"D\n\010Presence\022\014\n\004from\030" +
-      "\001 \002(\t\022\014\n\004type\030\002 \001(\t\022\014\n\004show\030\003 \001(\t\022\016\n\006sta" +
-      "tus\030\004 \001(\t\"\313\001\n\013TextMessage\022\n\n\002id\030\001 \001(\t\022\016\n" +
-      "\006toUser\030\002 \001(\t\022\020\n\010fromUser\030\003 \001(\t\022\014\n\004type\030" +
-      "\004 \001(\t\022\017\n\007subject\030\005 \001(\t\022\014\n\004body\030\006 \001(\t\022\016\n\006" +
-      "thread\030\007 \001(\t\022\016\n\006active\030\010 \001(\010\022\021\n\tcomposin" +
-      "g\030\t \001(\010\022\016\n\006paused\030\n \001(\010\022\020\n\010inactive\030\013 \001(" +
-      "\010\022\014\n\004gone\030\014 \001(\010"
+      "tobuf\"\340\003\n\020WebSocketMessage\022)\n\004ping\030\001 \001(\013" +
+      "2\033.com.treegger.protobuf.Ping\022G\n\023authent" +
+      "icateRequest\030\002 \001(\0132*.com.treegger.protob" +
+      "uf.AuthenticateRequest\022I\n\024authenticateRe" +
+      "sponse\030\003 \001(\0132+.com.treegger.protobuf.Aut" +
+      "henticateResponse\0227\n\013bindRequest\030\004 \001(\0132\"" +
+      ".com.treegger.protobuf.BindRequest\0229\n\014bi" +
+      "ndResponse\030\005 \001(\0132#.com.treegger.protobuf" +
+      ".BindResponse\022-\n\006roster\030\006 \001(\0132\035.com.tree",
+      "gger.protobuf.Roster\0221\n\010presence\030\007 \001(\0132\037" +
+      ".com.treegger.protobuf.Presence\0227\n\013textM" +
+      "essage\030\010 \001(\0132\".com.treegger.protobuf.Tex" +
+      "tMessage\"*\n\005Error\022\014\n\004code\030\001 \002(\r\022\023\n\013descr" +
+      "iption\030\002 \001(\t\"\022\n\004Ping\022\n\n\002id\030\001 \001(\t\"K\n\023Auth" +
+      "enticateRequest\022\020\n\010username\030\001 \002(\t\022\020\n\010pas" +
+      "sword\030\002 \002(\t\022\020\n\010resource\030\003 \002(\t\"Q\n\024Authent" +
+      "icateResponse\022\020\n\010username\030\001 \002(\t\022\021\n\tsessi" +
+      "onId\030\002 \001(\t\022\024\n\014errorMessage\030\003 \001(\t\" \n\013Bind" +
+      "Request\022\021\n\tsessionId\030\001 \002(\t\"!\n\014BindRespon",
+      "se\022\021\n\tsessionId\030\001 \001(\t\"9\n\006Roster\022/\n\004item\030" +
+      "\001 \003(\0132!.com.treegger.protobuf.RosterItem" +
+      "\"P\n\nRosterItem\022\014\n\004name\030\001 \002(\t\022\013\n\003jid\030\002 \002(" +
+      "\t\022\024\n\014subscription\030\003 \002(\t\022\021\n\titemGroup\030\004 \002" +
+      "(\t\"D\n\010Presence\022\014\n\004from\030\001 \002(\t\022\014\n\004type\030\002 \001" +
+      "(\t\022\014\n\004show\030\003 \001(\t\022\016\n\006status\030\004 \001(\t\"\313\001\n\013Tex" +
+      "tMessage\022\n\n\002id\030\001 \001(\t\022\016\n\006toUser\030\002 \001(\t\022\020\n\010" +
+      "fromUser\030\003 \001(\t\022\014\n\004type\030\004 \001(\t\022\017\n\007subject\030" +
+      "\005 \001(\t\022\014\n\004body\030\006 \001(\t\022\016\n\006thread\030\007 \001(\t\022\016\n\006a" +
+      "ctive\030\010 \001(\010\022\021\n\tcomposing\030\t \001(\010\022\016\n\006paused",
+      "\030\n \001(\010\022\020\n\010inactive\030\013 \001(\010\022\014\n\004gone\030\014 \001(\010"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -4274,7 +4720,7 @@ public final class WebSocketProto {
           internal_static_com_treegger_protobuf_WebSocketMessage_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_treegger_protobuf_WebSocketMessage_descriptor,
-              new java.lang.String[] { "AuthenticateRequest", "AuthenticateResponse", "BindRequest", "BindResponse", "Roster", "Presence", "TextMessage", },
+              new java.lang.String[] { "Ping", "AuthenticateRequest", "AuthenticateResponse", "BindRequest", "BindResponse", "Roster", "Presence", "TextMessage", },
               com.treegger.protobuf.WebSocketProto.WebSocketMessage.class,
               com.treegger.protobuf.WebSocketProto.WebSocketMessage.Builder.class);
           internal_static_com_treegger_protobuf_Error_descriptor =
@@ -4285,8 +4731,16 @@ public final class WebSocketProto {
               new java.lang.String[] { "Code", "Description", },
               com.treegger.protobuf.WebSocketProto.Error.class,
               com.treegger.protobuf.WebSocketProto.Error.Builder.class);
-          internal_static_com_treegger_protobuf_AuthenticateRequest_descriptor =
+          internal_static_com_treegger_protobuf_Ping_descriptor =
             getDescriptor().getMessageTypes().get(2);
+          internal_static_com_treegger_protobuf_Ping_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_treegger_protobuf_Ping_descriptor,
+              new java.lang.String[] { "Id", },
+              com.treegger.protobuf.WebSocketProto.Ping.class,
+              com.treegger.protobuf.WebSocketProto.Ping.Builder.class);
+          internal_static_com_treegger_protobuf_AuthenticateRequest_descriptor =
+            getDescriptor().getMessageTypes().get(3);
           internal_static_com_treegger_protobuf_AuthenticateRequest_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_treegger_protobuf_AuthenticateRequest_descriptor,
@@ -4294,15 +4748,15 @@ public final class WebSocketProto {
               com.treegger.protobuf.WebSocketProto.AuthenticateRequest.class,
               com.treegger.protobuf.WebSocketProto.AuthenticateRequest.Builder.class);
           internal_static_com_treegger_protobuf_AuthenticateResponse_descriptor =
-            getDescriptor().getMessageTypes().get(3);
+            getDescriptor().getMessageTypes().get(4);
           internal_static_com_treegger_protobuf_AuthenticateResponse_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_treegger_protobuf_AuthenticateResponse_descriptor,
-              new java.lang.String[] { "SessionId", },
+              new java.lang.String[] { "Username", "SessionId", "ErrorMessage", },
               com.treegger.protobuf.WebSocketProto.AuthenticateResponse.class,
               com.treegger.protobuf.WebSocketProto.AuthenticateResponse.Builder.class);
           internal_static_com_treegger_protobuf_BindRequest_descriptor =
-            getDescriptor().getMessageTypes().get(4);
+            getDescriptor().getMessageTypes().get(5);
           internal_static_com_treegger_protobuf_BindRequest_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_treegger_protobuf_BindRequest_descriptor,
@@ -4310,7 +4764,7 @@ public final class WebSocketProto {
               com.treegger.protobuf.WebSocketProto.BindRequest.class,
               com.treegger.protobuf.WebSocketProto.BindRequest.Builder.class);
           internal_static_com_treegger_protobuf_BindResponse_descriptor =
-            getDescriptor().getMessageTypes().get(5);
+            getDescriptor().getMessageTypes().get(6);
           internal_static_com_treegger_protobuf_BindResponse_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_treegger_protobuf_BindResponse_descriptor,
@@ -4318,7 +4772,7 @@ public final class WebSocketProto {
               com.treegger.protobuf.WebSocketProto.BindResponse.class,
               com.treegger.protobuf.WebSocketProto.BindResponse.Builder.class);
           internal_static_com_treegger_protobuf_Roster_descriptor =
-            getDescriptor().getMessageTypes().get(6);
+            getDescriptor().getMessageTypes().get(7);
           internal_static_com_treegger_protobuf_Roster_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_treegger_protobuf_Roster_descriptor,
@@ -4326,7 +4780,7 @@ public final class WebSocketProto {
               com.treegger.protobuf.WebSocketProto.Roster.class,
               com.treegger.protobuf.WebSocketProto.Roster.Builder.class);
           internal_static_com_treegger_protobuf_RosterItem_descriptor =
-            getDescriptor().getMessageTypes().get(7);
+            getDescriptor().getMessageTypes().get(8);
           internal_static_com_treegger_protobuf_RosterItem_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_treegger_protobuf_RosterItem_descriptor,
@@ -4334,7 +4788,7 @@ public final class WebSocketProto {
               com.treegger.protobuf.WebSocketProto.RosterItem.class,
               com.treegger.protobuf.WebSocketProto.RosterItem.Builder.class);
           internal_static_com_treegger_protobuf_Presence_descriptor =
-            getDescriptor().getMessageTypes().get(8);
+            getDescriptor().getMessageTypes().get(9);
           internal_static_com_treegger_protobuf_Presence_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_treegger_protobuf_Presence_descriptor,
@@ -4342,7 +4796,7 @@ public final class WebSocketProto {
               com.treegger.protobuf.WebSocketProto.Presence.class,
               com.treegger.protobuf.WebSocketProto.Presence.Builder.class);
           internal_static_com_treegger_protobuf_TextMessage_descriptor =
-            getDescriptor().getMessageTypes().get(9);
+            getDescriptor().getMessageTypes().get(10);
           internal_static_com_treegger_protobuf_TextMessage_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_treegger_protobuf_TextMessage_descriptor,

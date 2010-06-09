@@ -2,6 +2,8 @@ package com.treegger.protobuf;
 
 message WebSocketMessage 
 {
+	optional Ping ping = 1;
+	
  	optional AuthenticateRequest authenticateRequest = 2;
 	optional AuthenticateResponse authenticateResponse = 3;
 	
@@ -22,6 +24,14 @@ message Error
 	optional string description = 2;
 }
 
+
+message Ping
+{
+	optional string id = 1;
+	
+}
+
+
 message AuthenticateRequest
 {
 	required string username = 1;
@@ -30,7 +40,9 @@ message AuthenticateRequest
 }
 message AuthenticateResponse
 {
-	optional string sessionId = 1;
+	required string username = 1;
+	optional string sessionId = 2;
+	optional string errorMessage = 3;
 }
 message BindRequest
 {
