@@ -1,3 +1,6 @@
+		
+
+
 function Treegger( url )
 {
 	var pingSequence = 0;
@@ -49,9 +52,22 @@ function Treegger( url )
 	this.onTextMessage = function( textMessage ) {};
 	
 	
+	this.isDefined= function( wsMessage, propname )
+	{
+		
+		var descriptor = wsMessage.properties_[propname];
+			
+		if (!descriptor.type().IsInitialized ||
+                descriptor.type().IsInitialized( wsMessage.values_[propname] ) )
+        {
+			return true;
+        }
+		return false;
+	}
+
 	this.receiveWebSocketMessage = function( wsMessage )
 	{
-		if(  wsMessage.authenticateResponse != null )
+		if( this.isDefined( wsMessage, "authenticateResponse") )
 		{
 			this.sessionId = wsMessage.authenticateResponse.sessionId;
 			
@@ -65,17 +81,17 @@ function Treegger( url )
 			}
 		}
 		
-		else if( wsMessage.roster != null )
+		else if( this.isDefined( wsMessage, "roster") ) 
 		{
 			this.onRoster( wsMessage.roster );
 		}
 		
-		else if( wsMessage.presence != null )
+		else if( this.isDefined( wsMessage, "presence") ) 
 		{
 			this.onPresence( wsMessage.presence );
 		}
 
-		else if( wsMessage.textMessage != null )
+		else if( this.isDefined( wsMessage, "textMessage") ) 
 		{
 			this.onMessage( wsMessage.textMessage );
 		}

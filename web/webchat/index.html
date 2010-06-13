@@ -17,16 +17,18 @@ body {
 	font-size: 10px;
 }
 
-#dialog {
-	padding:0; margin:0 0 0 0; 
+#roster-dialog {
+	padding:0;
+	 
+	margin:0 0 0 0; 
 }
 
-#dialog ul {
+#roster-dialog ul {
 	list-style-type: none;
 	padding:0; margin:0 0 0 0; text-indent:0;
 }
  
-#nav li {
+#roster-list li {
 	display:block; 
 	background-color:#e8e8e8;
 	padding:7px; margin:0;
@@ -36,7 +38,7 @@ body {
 }
  
  
-#nav li:hover {
+#roster-list li:hover {
 	background:#f8f8f8;
 	border-bottom-color:#777;
 }
@@ -60,28 +62,27 @@ input.text { margin-bottom:12px; width:95%; padding: .4em; }
 
 
 
-<div id="login-dialog" title="Login">
+<div id="login-dialog" title="Login"  style="display:none">
 	<p class="validateTips"></p>
 
-	<form>
+	<form id="login-form">
 	<fieldset>
 		<label for="name">Name</label>
-		<input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all" />
+		<input type="text" name="name" class="text ui-widget-content ui-corner-all" />
 		
 		<label for="socialnetwork">Social Network</label>
-		<input type="text" name="socialnetwork" id="socialnetwork" class="text ui-widget-content ui-corner-all" />
+		<input type="text" name="socialnetwork" class="text ui-widget-content ui-corner-all" />
 		
 		
 		<label for="password">Password</label>
-		<input type="password" name="password" id="password" value="" class="text ui-widget-content ui-corner-all" />
+		<input type="password" name="password" value="" class="text ui-widget-content ui-corner-all" />
 	</fieldset>
 	</form>
 </div>
 
 
-<div id="dialog">
-<ul id="nav">
-	<li id="b1">John</li>
+<div id="roster-dialog" style="display:none">
+<ul id="roster-list">
 </ul>
 </div>
 
