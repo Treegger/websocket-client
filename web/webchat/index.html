@@ -46,6 +46,10 @@ body {
 fieldset { padding:0; border:0; margin-top:25px; }
 label, input { display:block; }
 input.text { margin-bottom:12px; width:95%; padding: .4em; }
+
+
+
+#chat-tabs { height: 300; width:500; padding:0; margin:0 0 4 0; } 
 		
 </style>
 
@@ -57,7 +61,6 @@ input.text { margin-bottom:12px; width:95%; padding: .4em; }
 
 </head>
 <body>
-
 
 
 
@@ -84,6 +87,14 @@ input.text { margin-bottom:12px; width:95%; padding: .4em; }
 <div id="roster-dialog" style="display:none">
 <ul id="roster-list">
 </ul>
+</div>
+
+<div id="chat-dialog" style="display:none">
+	<div id="chat-tabs" class="tabs-bottom">
+		<ul id="chat-list">
+		</ul>
+		
+	</div>
 </div>
 
 </body>

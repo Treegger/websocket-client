@@ -1,6 +1,7 @@
 google.load("jquery", "1.4");
 google.load("jqueryui", "1.8");
 
+
 var treegger = new Treegger( "wss://xmpp.treegger.com/tg-1.0/b64")
 treegger.onAuthenticationSuccess = function()
 {
@@ -17,7 +18,14 @@ treegger.onRoster = function( roster )
 	var rosterDialog = $("#roster-dialog");
 	var rosterList = $("#roster-list")
 	$.each( roster.item, function(index, value) { 
-		rosterList.append( "<li>"+value.name+"</li>")
+		var element = $("<li>"+value.name+"</li>")
+		element.dblclick( function( event )
+		{
+			createChatWith( value );
+		}
+		);
+		
+		rosterList.append( element)
 	});
 	rosterDialog.dialog(
 		{
@@ -27,8 +35,58 @@ treegger.onRoster = function( roster )
 		}
 	);
 	rosterDialog.show();
+}
 
+
+function getUserFromJID( jid )
+{
+	var i = jid.indexOf( "@" )
+	if( i > 0 ) return jid.substring( 0, i );
+	else return jid;
+}
+
+var chatDialogVisible = false;
+function createChatWith( rosterItem )
+{
+	if( !chatDialogVisible )
+	{
+		$("#chat-dialog").dialog(
+			{
+				width: 520,
+				heigh: 400,
+				resizable: false,
+				closeOnEscape: false
+			}
+		);
 	
+		$("#chat-tabs").tabs();
+		chatDialogVisible = true;
+	}
+	
+	var userId = getUserFromJID( rosterItem.jid );
+	$("#chat-tabs").tabs( "add", "#tab-"+userId, rosterItem.name );
+	
+	var chatTab = $("#tab-"+userId);
+	chatTab.append( "<textarea readonly style='width: 470px; height: 230px;resize:none;'/>" );
+	
+	var input = $("<input type='text' style='width: 470px;'></input>");
+	input.keypress( function( event ){
+		if( event.keyCode == 13 )
+		{
+			addTextToChatTab( chatTab, "You", event.currentTarget.value )
+		}
+	});
+	chatTab.append( input );
+}
+
+
+function addTextToChatTab( chatTab, from, text )
+{
+	var textarea = chatTab.find( 'textarea');
+	textarea.html( textarea.text() + '\n' + from + ": " + text );
+	textarea.scrollTop( textarea.innerHeight() );
+	event.currentTarget.value = "";
+
 }
 
 google.setOnLoadCallback(function() 
