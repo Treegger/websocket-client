@@ -9,15 +9,27 @@ function Treegger( url )
 	
 	var that = this;
 	
-	setInterval( this.ping, 30000 );
 	
 	if ("WebSocket" in window)
 	{
+		
 		var conn = new WebSocket( url )
+		
+		setInterval( function()
+			{
+				var pingMsg = new com.treegger.protobuf.Ping;
+				pingMsg.id = pingSequence.toString();
+				that.pingSequence++;
+				var wsMsg = new com.treegger.protobuf.WebSocketMessage;
+				wsMsg.ping = pingMsg;
+				that.sendWebSocketMessage( wsMsg );
+			}, 30*1000 );
 		
 		conn.onopen = function(evt) 
 		{
 			that.connected = true;
+			that.onConnect( event );
+
 		};
 		
 		conn.onmessage = function(event) 
@@ -30,11 +42,13 @@ function Treegger( url )
 		
 		conn.onerror = function(event) 
 		{
+			that.onError( event );
 		};
 			
 		conn.onclose = function(evt) 
 		{
 			that.connected = false;
+			that.onDisconnect( event );
 		};
 
 
@@ -50,6 +64,11 @@ function Treegger( url )
 	this.onRoster = function( roster ) {};
 	this.onPresence = function( presence ) {};
 	this.onTextMessage = function( textMessage ) {};
+	this.onPing = function( textMessage ) {};
+	
+	this.onConnect = function( e ) {};
+	this.onDisconnect = function( e ) {};
+	this.onError = function( e ) {};
 	
 	
 	this.isDefined= function( wsMessage, propname )
@@ -93,8 +112,13 @@ function Treegger( url )
 
 		else if( this.isDefined( wsMessage, "textMessage") ) 
 		{
-			this.onMessage( wsMessage.textMessage );
+			this.onTextMessage( wsMessage.textMessage );
 		}
+		else if( this.isDefined( wsMessage, "ping") ) 
+		{
+			this.onPing( wsMessage.ping );
+		}
+
 	}
 	
 
@@ -112,15 +136,6 @@ function Treegger( url )
 	}
 
 	
-	this.ping = function()
-	{
-		var pingMsg = new com.treegger.protobuf.Ping;
-		pingMsg.id = this.pingSequence.toString();
-		this.pingSequence++;
-		var wsMsg = new com.treegger.protobuf.WebSocketMessage;
-		wsMsg.ping = pingMsg;
-		this.sendWebSocketMessage( wsMsg );
-	}
 
 	
 	this.authenticate = function( username, socialnetwork, password, resource )

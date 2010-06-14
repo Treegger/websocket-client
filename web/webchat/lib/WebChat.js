@@ -2,21 +2,56 @@ google.load("jquery", "1.4");
 google.load("jqueryui", "1.8");
 
 
+function outputDebug( text )
+{
+	//var textarea = $("#debug-area");	
+	//textarea.html( textarea.text() + '\n' + text );	
+}
+
 var treegger = new Treegger( "wss://xmpp.treegger.com/tg-1.0/b64")
+
+treegger.onConnect = function()
+{
+	$("#connected-box").show();
+	$("#disconnected-box").hide();
+}
+treegger.onDisconnect = function()
+{
+	$("#connected-box").hide();
+	$("#disconnected-box").show();
+}
+
 treegger.onAuthenticationSuccess = function()
 {
 	$("#login-dialog").dialog('close');
 }
+treegger.onPing = function()
+{
+	outputDebug( "Pong" )
+}
 
 treegger.onAuthenticationFailure = function()
 {
-	alert( "Failure" );
+	$("#login-dialog").dialog( "enable" );
+	alert( "Authentication Failure" );
 }
 
-treegger.onRoster = function( roster )
+
+var roster;
+treegger.onRoster = function( remoteRoster )
 {
+	roster = remoteRoster;
 	var rosterDialog = $("#roster-dialog");
+	rosterDialog.dialog(
+			{
+				width: 140,
+				height: 400,
+				closeOnEscape: false
+			}
+		);
 	var rosterList = $("#roster-list")
+	rosterDialog.show();
+
 	$.each( roster.item, function(index, value) { 
 		var element = $("<li>"+value.name+"</li>")
 		element.dblclick( function( event )
@@ -27,25 +62,68 @@ treegger.onRoster = function( roster )
 		
 		rosterList.append( element)
 	});
-	rosterDialog.dialog(
-		{
-			width: 140,
-			height: 400,
-			closeOnEscape: false
-		}
-	);
-	rosterDialog.show();
 }
 
 
-function getUserFromJID( jid )
+treegger.onTextMessage = function( textMessage ) 
 {
-	var i = jid.indexOf( "@" )
-	if( i > 0 ) return jid.substring( 0, i );
-	else return jid;
+	if( textMessage.fromUser != null && textMessage.body != null )
+	{
+		var rosterItem = getRosterItemFromJID( textMessage.fromUser );
+		if( rosterItem != null )
+		{
+			var userId = "uid-"+getUIDFromJID( rosterItem.jid );
+			var chatTab = $("#tab-"+userId);
+			if( chatTab == null )
+			{
+				chatTab = createChatWith( rosterItem );
+			}
+			addTextToChatTab( chatTab, rosterItem.name, textMessage.body )
+		}
+	}
+}
+
+
+var idMap = {};
+var uidMapIndex = 1;
+
+function getRosterItemFromJID( jid )
+{
+	var userAndHost = getUserAndHost(jid);
+	for( i in roster.item ){
+		var value = roster.item[i];
+		if( userAndHost == value.jid )
+		{
+			return value;
+		}
+	}
+	return null;
+}
+
+function getUserAndHost( jid )
+{
+	var userAndHost = jid;
+	var i = jid.indexOf( '/' )
+	if( i > 0 ) userAndHost = jid.substring( 0, i );
+	return userAndHost;
+}
+
+function getUIDFromJID( jid )
+{
+	
+	var uid = idMap[getUserAndHost(jid)];
+	if( uid == null )
+	{
+		uid = uidMapIndex;
+		idMap[jid] = uid;
+		uidMapIndex ++;
+	}
+	return uid;
 }
 
 var chatDialogVisible = false;
+var chatTabs = {};
+
 function createChatWith( rosterItem )
 {
 	if( !chatDialogVisible )
@@ -63,22 +141,32 @@ function createChatWith( rosterItem )
 		chatDialogVisible = true;
 	}
 	
-	var userId = getUserFromJID( rosterItem.jid );
-	$("#chat-tabs").tabs( "add", "#tab-"+userId, rosterItem.name );
+	var uid = getUIDFromJID( rosterItem.jid );
 	
-	var chatTab = $("#tab-"+userId);
-	chatTab.append( "<textarea readonly style='width: 470px; height: 230px;resize:none;'/>" );
+	var chatTab = chatTabs[uid];
+	if( chatTab == null )
+	{
+		$("#chat-tabs").tabs( "add", "#tab-uid-"+uid, rosterItem.name );
+		
+		chatTab = $("#tab-uid-"+uid);
+		chatTabs[uid] = chatTab;
+		         
+		chatTab.append( "<textarea readonly style='width: 470px; height: 230px;resize:none;'/>" );
+		
+		var input = $("<input type='text' style='width: 470px;'></input>");
+		input.keypress( function( event ){
+			if( event.keyCode == 13 )
+			{
+				treegger.sendMessage( rosterItem.jid, event.currentTarget.value )
+				addTextToChatTab( chatTab, "You", event.currentTarget.value );
+			}
+		});
+		chatTab.append( input );
+	}
 	
-	var input = $("<input type='text' style='width: 470px;'></input>");
-	input.keypress( function( event ){
-		if( event.keyCode == 13 )
-		{
-			addTextToChatTab( chatTab, "You", event.currentTarget.value )
-		}
-	});
-	chatTab.append( input );
-}
+	return chatTab;
 
+}
 
 function addTextToChatTab( chatTab, from, text )
 {
@@ -110,10 +198,11 @@ google.setOnLoadCallback(function()
 	{
 		var form = $("#login-form")
 		var name = form.find('input[name=name]').val();
-		var socialnetwork = form.find('input[name=socialnetwork]').val();
+		var socialnetwork = form.find('select[name=socialnetwork]').val();
 		var password = form.find('input[name=password]').val();
 		var resource = "WebChat";
-		
+
+		$("#login-dialog").dialog( "disable" );
 		treegger.authenticate( name, socialnetwork, password, resource );
 		return false;
 	}

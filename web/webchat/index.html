@@ -46,6 +46,7 @@ body {
 fieldset { padding:0; border:0; margin-top:25px; }
 label, input { display:block; }
 input.text { margin-bottom:12px; width:95%; padding: .4em; }
+select { margin-top:4px; margin-bottom:12px; height:24px; width:95%; padding: .4em; }
 
 
 
@@ -63,9 +64,13 @@ input.text { margin-bottom:12px; width:95%; padding: .4em; }
 <body>
 
 
-
-
-<div id="login-dialog" title="Login"  style="display:none">
+<div id="connected-box" style="display:none"><p>Connected</p></div>
+<div id="disconnected-box"><p>Disconected</p></div>
+<!-- 
+<textarea id="debug-area" rows="10" cols="100"></textarea>
+ -->
+ 
+<div id="login-dialog" title="Login" style="display:none">
 	<p class="validateTips"></p>
 
 	<form id="login-form">
@@ -74,7 +79,10 @@ input.text { margin-bottom:12px; width:95%; padding: .4em; }
 		<input type="text" name="name" class="text ui-widget-content ui-corner-all" />
 		
 		<label for="socialnetwork">Social Network</label>
-		<input type="text" name="socialnetwork" class="text ui-widget-content ui-corner-all" />
+		<select name="socialnetwork" class="text ui-widget-content ui-corner-all">
+        	<option value="twitter">Twitter</option>
+        	<option value="foursquare">Foursquare</option>
+	    </select>
 		
 		
 		<label for="password">Password</label>
