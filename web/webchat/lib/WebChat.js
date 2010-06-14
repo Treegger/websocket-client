@@ -83,11 +83,12 @@ treegger.onRoster = function( remoteRoster )
 	var rosterList = $("#roster-list")
 	rosterDialog.show();
 
-	$.each( roster.item, function(index, value) { 
-		var element = $("<li>"+value.name+"</li>")
+	$.each( roster.item, function(index, rosterItem) { 
+		var uid = getUIDFromJID( rosterItem.jid );
+		var element = $("<li id='roster-item-"+uid+"'>"+rosterItem.name+"</li>")
 		element.dblclick( function( event )
 		{
-			createChatWith( value );
+			createChatWith( rosterItem );
 		}
 		);
 		
@@ -95,6 +96,27 @@ treegger.onRoster = function( remoteRoster )
 	});
 }
 
+treegger.onPresence = function( presence ) 
+{
+	var rosterList = $("#roster-list")
+
+	var uid = getUIDFromJID( presence.from );
+	var li = $("#roster-item-"+ uid );
+	if( presence.type == "unavailable")
+	{
+		rosterList.append( li.detach() );
+		li.removeClass().addClass( "presenceUnvailable" )
+	}
+	else
+	{
+		if( presence.show == "away" || presence.show == "dnd" || presence.show == "xa") li.removeClass().addClass( "presenceAway" )
+		else
+		{
+			rosterList.prepend( li.detach() );
+			li.removeClass().addClass( "presenceAvailable" )
+		}
+	}
+}
 
 treegger.onTextMessage = function( textMessage ) 
 {
