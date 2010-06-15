@@ -266,6 +266,7 @@ google.setOnLoadCallback(function()
 	{
 		var form = $("#login-form")
 		var name = form.find('input[name=name]').val();
+		name = name.replace( "@", "#" );
 		var socialnetwork = form.find('select[name=socialnetwork]').val();
 		var password = form.find('input[name=password]').val();
 		var resource = "WebChat";
