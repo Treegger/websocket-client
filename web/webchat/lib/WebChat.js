@@ -55,6 +55,7 @@ treegger.onDisconnect = function()
 treegger.onAuthenticationSuccess = function()
 {
 	$("#login-dialog").dialog('close');
+	treegger.sendPresence( "", "", "" );
 }
 treegger.onPing = function()
 {
@@ -102,14 +103,19 @@ treegger.onPresence = function( presence )
 
 	var uid = getUIDFromJID( presence.from );
 	var li = $("#roster-item-"+ uid );
-	if( presence.type == "unavailable")
+	if( presence.type != null && presence.type.toLowerCase() == "unavailable")
 	{
 		rosterList.append( li.detach() );
 		li.removeClass().addClass( "presenceUnvailable" )
 	}
 	else
 	{
-		if( presence.show == "away" || presence.show == "dnd" || presence.show == "xa") li.removeClass().addClass( "presenceAway" )
+		var show;
+		if( presence.show != null )
+		{
+			show = presence.show.toLowerCase();
+		}
+		if( show != null && ( show == "away" || show == "dnd" || show == "xa") ) li.removeClass().addClass( "presenceAway" )
 		else
 		{
 			rosterList.prepend( li.detach() );

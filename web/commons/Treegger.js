@@ -34,6 +34,9 @@ function Treegger( url )
 	var connected = false;
 	var sessionId;
 	
+	var currentUser;
+	var currentSocialNetwork;
+	
 	var that = this;
 	
 	
@@ -163,14 +166,18 @@ function Treegger( url )
 	}
 
 	
-
+	
 	
 	this.authenticate = function( username, socialnetwork, password, resource )
 	{
+		
 		var authReqMsg = new com.treegger.protobuf.AuthenticateRequest;
 		authReqMsg.username = username+"@"+socialnetwork;
 		authReqMsg.password = password;
 		authReqMsg.resource = resource;
+		
+		this.currentUser = username;
+		this.currentSocialNetwork = socialnetwork;
 
 		var wsMsg = new com.treegger.protobuf.WebSocketMessage;
 		wsMsg.authenticateRequest = authReqMsg;
@@ -178,9 +185,10 @@ function Treegger( url )
 		this.sendWebSocketMessage( wsMsg );
 	}
 
-	this.sendPresence = function( type, show,	status )
+	this.sendPresence = function( type, show, status )
 	{
 		var presence = new com.treegger.protobuf.Presence;
+		presence.from = this.currentUser+"@"+this.currentSocialNetwork;
 		presence.type = type;
 		presence.show = show;
 		presence.status = status;
