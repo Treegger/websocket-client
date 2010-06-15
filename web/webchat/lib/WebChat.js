@@ -90,6 +90,7 @@ treegger.onRoster = function( remoteRoster )
 		element.dblclick( function( event )
 		{
 			createChatWith( rosterItem );
+			openChatDialog();
 		}
 		);
 		
@@ -133,10 +134,11 @@ treegger.onTextMessage = function( textMessage )
 		{
 			var userId = "uid-"+getUIDFromJID( rosterItem.jid );
 			var chatTab = $("#tab-"+userId);
-			if( chatTab == null )
+			if( chatTab.length == 0 )
 			{
 				chatTab = createChatWith( rosterItem );
 			}
+			openChatDialog();
 			addTextToChatTab( chatTab, rosterItem.name, textMessage.body )
 		}
 	}
@@ -182,6 +184,13 @@ function getUIDFromJID( jid )
 
 var chatDialogVisible = false;
 var chatTabs = {};
+
+
+function openChatDialog()
+{
+	var chatDialog = $("#chat-dialog");
+	if( ! chatDialog.dialog( "isOpen" ) ) chatDialog.dialog( "open" );
+}
 
 function createChatWith( rosterItem )
 {
