@@ -2,6 +2,7 @@ Protobuf required to generate the sources:
 - Google Protobuf http://code.google.com/p/protobuf/ to generate C++/Java sources
 - Protojs http://github.com/sirikata/protojs to generate JS sources
 - Protoc-gen-as3 http://code.google.com/p/protoc-gen-as3/ to generate AS3 sources
+- ProtocolBuffers http://code.google.com/p/metasyntactic/wiki/ProtocolBuffers to generate Objective C sources
 
 For convenience, we have generated the sources for javascript, as3 and java in 'generated' folder. Those files might not be up to date. 
 

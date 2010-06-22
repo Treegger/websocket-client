@@ -8,6 +8,7 @@ java folder contains a simple Java Websocket client
 
 protobuf folder contains simple WebSocket protobuf ( see http://code.google.com/p/protobuf/ )  message description. 
 You have to compile this file with protobuf tools to generate de/serializer sources.
+Java, AS3, ObjectiveC and Javascript files are provided in "generated" folder
 
 === Web ===
 
