@@ -18,9 +18,6 @@ public class WSConnector
 	
 	public void connect( String scheme, String host, int port, String path, WSEventHandler wsEventHandler ) throws IOException
 	{
-        
-        
-        
         if( scheme.equals("ws") ) 
         {
             if (port == -1) 
@@ -65,6 +62,14 @@ public class WSConnector
         new WSReader( input, wsEventHandler ).start();
         
 	}
+    public boolean isConnected()
+    {
+        return socket.isConnected();
+    }
+    public boolean canSendMessage()
+    {
+        return isConnected() && !socket.isOutputShutdown();
+    }
 	
 	
 	public void send( String message ) throws IOException
@@ -79,15 +84,18 @@ public class WSConnector
 	
 	public void send( byte[] message ) throws IOException
 	{
-		OutputStream os = socket.getOutputStream();
-		os.write( 0x80 );
-		int dataLen = message.length;
-		os.write((byte) (dataLen >>> 28 & 0x7F | 0x80));
-		os.write((byte) (dataLen >>> 14 & 0x7F | 0x80));
-		os.write((byte) (dataLen >>> 7 & 0x7F | 0x80));
-		os.write((byte) (dataLen & 0x7F));
-		os.write( message );
-		os.flush();
+	    if( canSendMessage() )
+	    {
+    		OutputStream os = socket.getOutputStream();
+    		os.write( 0x80 );
+    		int dataLen = message.length;
+    		os.write((byte) (dataLen >>> 28 & 0x7F | 0x80));
+    		os.write((byte) (dataLen >>> 14 & 0x7F | 0x80));
+    		os.write((byte) (dataLen >>> 7 & 0x7F | 0x80));
+    		os.write((byte) (dataLen & 0x7F));
+    		os.write( message );
+    		os.flush();
+	    }
 	}
 	
 	public void close() throws IOException
