@@ -62,13 +62,13 @@ public class WSConnector
         new WSReader( input, wsEventHandler ).start();
         
 	}
-    public boolean isConnected()
+    public boolean isClosed()
     {
-        return socket.isConnected();
+        return socket.isClosed();
     }
     public boolean canSendMessage()
     {
-        return isConnected() && !socket.isOutputShutdown();
+        return !isClosed() && !socket.isOutputShutdown();
     }
 	
 	
