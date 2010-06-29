@@ -1,3 +1,5 @@
+//option optimize_for = LITE_RUNTIME; 
+//option optimize_for = CODE_SIZE;
 package com.treegger.protobuf;
 
 message WebSocketMessage 
