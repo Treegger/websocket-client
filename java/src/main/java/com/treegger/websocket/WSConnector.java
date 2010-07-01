@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.net.UnknownHostException;
 
 import javax.net.SocketFactory;
 import javax.net.ssl.SSLSocketFactory;
@@ -14,71 +15,35 @@ import javax.net.ssl.SSLSocketFactory;
 public class WSConnector 
 {
 
-	private Socket socket;
-	
+	private WSReader wsReader;
 	public void connect( String scheme, String host, int port, String path, WSEventHandler wsEventHandler ) throws IOException
 	{
-        if( scheme.equals("ws") ) 
-        {
-            if (port == -1) 
-            {
-                    port = 80;
-            }
-            socket = new Socket(host, port);
-        }
-        else if( scheme.equals("wss") )
-        {
-            if (port == -1) {
-            	port = 443;
-            }
-        	SocketFactory factory = SSLSocketFactory.getDefault();
-        	socket = factory.createSocket( host, port );
-        }
-        
-
-        InputStream input = socket.getInputStream();
-    
-        String handshake = "GET " + path + " HTTP/1.1\r\n" +
-        					"Upgrade: WebSocket\r\n" +
-        					"Connection: Upgrade\r\n" +
-        					"Host: " + host + "\r\n" +
-        					"Origin: http://" + host     
-        					+ "\r\n"
-        					+ "\r\n";
-        
-        OutputStream os = socket.getOutputStream();
-        os.write( handshake.getBytes() );
-        os.flush();
-        
-        BufferedReader reader = new BufferedReader( new InputStreamReader(input) );
-        String line = reader.readLine();
-        if ( !line.equals("HTTP/1.1 101 Web Socket Protocol Handshake") ) 
-        {
-        	throw new IOException("unable to connect to server");
-        }
-        
-        wsEventHandler.onOpen();
-    
-        new WSReader( input, wsEventHandler ).start();
+	    wsReader = new WSReader( scheme, host, port, path, wsEventHandler );
+	    wsReader.start();
         
 	}
+	
     public boolean isClosed()
     {
-        return socket.isClosed();
+        if( wsReader.socket != null ) return wsReader.socket.isClosed();
+        return true;
     }
     public boolean canSendMessage()
     {
-        return !isClosed() && !socket.isOutputShutdown();
+        return !isClosed() && wsReader.socket != null && !wsReader.socket.isOutputShutdown();
     }
 	
 	
 	public void send( String message ) throws IOException
 	{
-        OutputStream os = socket.getOutputStream();
-        os.write( 0x00 );
-        os.write( message.getBytes() );
-        os.write( 0xFF );
-        os.flush();
+	    if( canSendMessage() )
+	    {
+            OutputStream os = wsReader.socket.getOutputStream();
+            os.write( 0x00 );
+            os.write( message.getBytes() );
+            os.write( 0xFF );
+            os.flush();
+	    }
 	}
 
 	
@@ -86,7 +51,7 @@ public class WSConnector
 	{
 	    if( canSendMessage() )
 	    {
-    		OutputStream os = socket.getOutputStream();
+    		OutputStream os = wsReader.socket.getOutputStream();
     		os.write( 0x80 );
     		int dataLen = message.length;
     		os.write((byte) (dataLen >>> 28 & 0x7F | 0x80));
@@ -100,7 +65,7 @@ public class WSConnector
 	
 	public void close() throws IOException
 	{
-		socket.close();
+	    if( wsReader.socket != null ) wsReader.socket.close();
 	}
 	
 	
@@ -127,52 +92,117 @@ public class WSConnector
         private WSEventHandler eventHandler = null;
     	private ByteArrayOutputStream boas = new ByteArrayOutputStream();
 
-        public WSReader(InputStream input, WSEventHandler eventHandler )
+    	private Socket socket;
+    	
+    	private String scheme;
+    	private String host;
+    	private int port;
+    	private String path;
+    	
+        public WSReader( String scheme, String host, int port, String path, WSEventHandler eventHandler )
         {
-                this.input = input;
-                this.eventHandler = eventHandler;
-                
+            this.scheme = scheme;
+            this.host = host;
+            this.port = port;
+            this.path = path;
+            this.eventHandler = eventHandler;                
         }
+        
+        
+        private void connect() throws UnknownHostException, IOException
+        {
+            if( scheme.equals("ws") ) 
+            {
+                if (port == -1) 
+                {
+                        port = 80;
+                }
+                socket = new Socket(host, port);
+            }
+            else if( scheme.equals("wss") )
+            {
+                if (port == -1) {
+                    port = 443;
+                }
+                SocketFactory factory = SSLSocketFactory.getDefault();
+                socket = factory.createSocket( host, port );
+            }
+            
 
+            input = socket.getInputStream();
+        
+            String handshake = "GET " + path + " HTTP/1.1\r\n" +
+                                "Upgrade: WebSocket\r\n" +
+                                "Connection: Upgrade\r\n" +
+                                "Host: " + host + "\r\n" +
+                                "Origin: http://" + host     
+                                + "\r\n"
+                                + "\r\n";
+            
+            OutputStream os = socket.getOutputStream();
+            os.write( handshake.getBytes() );
+            os.flush();
+            
+            BufferedReader reader = new BufferedReader( new InputStreamReader(input) );
+            String line = reader.readLine();
+            if ( !line.equals("HTTP/1.1 101 Web Socket Protocol Handshake") ) 
+            {
+                throw new IOException("unable to connect to server");
+            }
+            
+        }
+        
+        
         public void run()
         {
-
-            while (true)
+            try
             {
-                try 
+                connect();
+
+                eventHandler.onOpen();
+
+                while (true)
                 {
-                	int b = input.read();
-                	if( b == -1 )
-                	{
-                		eventHandler.onClose();
-                		break;
-                	}
-                	if (b == 0x00) 
-                	{
-                		eventHandler.onMessage(  decodeTextFrame() );
-                	}
-                	else if( b == 0x80 )
-                	{
-                		eventHandler.onMessage(  decodeBinaryFrame() );
-                	}
-                	else
-                	{
-                		throw new IOException( "Unexpected byte: " + Integer.toHexString(b) );
-                	}
-            	}
-                catch (IOException e) 
-                {
-                    eventHandler.onClose();
                     try 
                     {
-						input.close();
-					} catch (IOException e1) 
-					{
-					}
-					eventHandler.onError( e );
-                    break;
+                    	int b = input.read();
+                    	if( b == -1 )
+                    	{
+                    		eventHandler.onClose();
+                    		break;
+                    	}
+                    	if (b == 0x00) 
+                    	{
+                    		eventHandler.onMessage(  decodeTextFrame() );
+                    	}
+                    	else if( b == 0x80 )
+                    	{
+                    		eventHandler.onMessage(  decodeBinaryFrame() );
+                    	}
+                    	else
+                    	{
+                    		throw new IOException( "Unexpected byte: " + Integer.toHexString(b) );
+                    	}
+                	}
+                    catch (IOException e) 
+                    {
+                        eventHandler.onClose();
+                        try 
+                        {
+    						input.close();
+    					} catch (IOException e1) 
+    					{
+    					}
+    					eventHandler.onError( e );
+                        break;
+                    }
                 }
             }
+            catch ( Exception e )
+            {
+                eventHandler.onError( e );
+            }
+
         }
         
         private byte[] decodeBinaryFrame() throws IOException {
