@@ -28,7 +28,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<scala.version>2.8.0.RC6</scala.version>
+		<scala.version>2.8.0.RC7</scala.version>
 	</properties>
 
 	<dependencies>
@@ -42,7 +42,7 @@
 		<dependency>
 			<groupId>com.treegger.websocket</groupId>
 			<artifactId>websocket-client</artifactId>
-			<version>0.3.1</version>
+			<version>0.4</version>
 		</dependency>
 
 		<dependency>
