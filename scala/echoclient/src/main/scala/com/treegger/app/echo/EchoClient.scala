@@ -21,16 +21,28 @@ class EchoClient
         
         val handler = new EchoHandler( wsConnector, properties.getProperty("name"), properties.getProperty("socialnetwork"), properties.getProperty("password") )
 
-        wsConnector.connect(  "wss", "xmpp.treegger.com", 443, "/tg-1.0" , handler )
-        
-        while( !handler.open )
+        while( true )
         {
-            Thread.sleep( 1000 )
-        }
-        while( handler.open )
-        {
-            Thread.sleep( 30*1000 )
-            handler.ping()
+            try
+            {
+                wsConnector.connect(  "wss", "xmpp.treegger.com", 443, "/tg-1.0" , handler )
+                
+                while( !handler.open )
+                {
+                    Thread.sleep( 1000 )
+                }
+                while( handler.open )
+                {
+                    Thread.sleep( 30*1000 )
+                    handler.ping()
+                }
+            }
+            catch
+            {
+                case e:Exception =>
+                    println( "Catch exception: " + e.getMessage + "\nReconnecting..." )
+                    
+            }
         }
 
     }
