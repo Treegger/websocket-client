@@ -18,7 +18,7 @@ public class WSConnector
 	private WSReader wsReader;
 	public void connect( String scheme, String host, int port, String path, WSEventHandler wsEventHandler ) throws IOException
 	{
-	    wsReader = new WSReader( scheme, host, port, path, wsEventHandler );
+        wsReader = new WSReader( scheme, host, port, path, wsEventHandler );
 	    wsReader.start();
         
 	}
@@ -81,8 +81,8 @@ public class WSConnector
 
 	        public void onError( Exception e );
 
-
 	        public void onClose();
+	        public void onStop();
 	}
 	
 	static public class WSReader extends Thread	
@@ -163,46 +163,47 @@ public class WSConnector
 
                 while (true)
                 {
-                    try 
-                    {
-                    	int b = input.read();
-                    	if( b == -1 )
-                    	{
-                    		eventHandler.onClose();
-                    		break;
-                    	}
-                    	if (b == 0x00) 
-                    	{
-                    		eventHandler.onMessage(  decodeTextFrame() );
-                    	}
-                    	else if( b == 0x80 )
-                    	{
-                    		eventHandler.onMessage(  decodeBinaryFrame() );
-                    	}
-                    	else
-                    	{
-                    		throw new IOException( "Unexpected byte: " + Integer.toHexString(b) );
-                    	}
+                	int b = input.read();
+                	if( b == -1 )
+                	{
+                		eventHandler.onClose();
+                		break;
                 	}
-                    catch (IOException e) 
-                    {
-                        eventHandler.onClose();
-                        try 
-                        {
-    						input.close();
-    					} catch (IOException e1) 
-    					{
-    					}
-    					eventHandler.onError( e );
-                        break;
-                    }
+                	if (b == 0x00) 
+                	{
+                		eventHandler.onMessage(  decodeTextFrame() );
+                	}
+                	else if( b == 0x80 )
+                	{
+                		eventHandler.onMessage(  decodeBinaryFrame() );
+                	}
+                	else
+                	{
+                		throw new IOException( "Unexpected byte: " + Integer.toHexString(b) );
+                	}
                 }
             }
             catch ( Exception e )
             {
                 eventHandler.onError( e );
             }
-
+/*
+ *                  }
+                    catch (IOException e) 
+                    {
+                        eventHandler.onClose();
+                        try 
+                        {
+                            input.close();
+                        } catch (IOException e1) 
+                        {
+                        }
+                        eventHandler.onError( e );
+                        break;
+                    }
+*/
+            
+            eventHandler.onStop();
         }
         
         private byte[] decodeBinaryFrame() throws IOException {
