@@ -136,7 +136,10 @@ package com.treegger.protobuf {
 		public function get gone():Boolean {
 			return gone_;
 		}
-		protected override function writePostposeLength(output:PostposeLengthBuffer):void {
+		/**
+		 *  @private
+		 */
+		public override function writeToBuffer(output:WritingBuffer):void {
 			if (hasId) {
 				WriteUtils.writeTag(output, WireType.LENGTH_DELIMITED, 1);
 				WriteUtils.write_TYPE_STRING(output, id);

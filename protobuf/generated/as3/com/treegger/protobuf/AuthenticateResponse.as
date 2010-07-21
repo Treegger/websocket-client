@@ -27,7 +27,10 @@ package com.treegger.protobuf {
 		public function get errorMessage():String {
 			return errorMessage_;
 		}
-		protected override function writePostposeLength(output:PostposeLengthBuffer):void {
+		/**
+		 *  @private
+		 */
+		public override function writeToBuffer(output:WritingBuffer):void {
 			WriteUtils.writeTag(output, WireType.LENGTH_DELIMITED, 1);
 			WriteUtils.write_TYPE_STRING(output, username);
 			if (hasSessionId) {

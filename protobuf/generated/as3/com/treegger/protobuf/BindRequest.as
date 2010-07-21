@@ -7,7 +7,10 @@ package com.treegger.protobuf {
 	// @@protoc_insertion_point(class_metadata)
 	public final class BindRequest extends com.netease.protobuf.Message implements flash.utils.IExternalizable {
 		public var sessionId:String;
-		protected override function writePostposeLength(output:PostposeLengthBuffer):void {
+		/**
+		 *  @private
+		 */
+		public override function writeToBuffer(output:WritingBuffer):void {
 			WriteUtils.writeTag(output, WireType.LENGTH_DELIMITED, 1);
 			WriteUtils.write_TYPE_STRING(output, sessionId);
 		}

@@ -10,7 +10,10 @@ package com.treegger.protobuf {
 		public var jid:String;
 		public var subscription:String;
 		public var itemGroup:String;
-		protected override function writePostposeLength(output:PostposeLengthBuffer):void {
+		/**
+		 *  @private
+		 */
+		public override function writeToBuffer(output:WritingBuffer):void {
 			WriteUtils.writeTag(output, WireType.LENGTH_DELIMITED, 1);
 			WriteUtils.write_TYPE_STRING(output, name);
 			WriteUtils.writeTag(output, WireType.LENGTH_DELIMITED, 2);

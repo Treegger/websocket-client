@@ -16,7 +16,10 @@ package com.treegger.protobuf {
 		public function get sessionId():String {
 			return sessionId_;
 		}
-		protected override function writePostposeLength(output:PostposeLengthBuffer):void {
+		/**
+		 *  @private
+		 */
+		public override function writeToBuffer(output:WritingBuffer):void {
 			if (hasSessionId) {
 				WriteUtils.writeTag(output, WireType.LENGTH_DELIMITED, 1);
 				WriteUtils.write_TYPE_STRING(output, sessionId);

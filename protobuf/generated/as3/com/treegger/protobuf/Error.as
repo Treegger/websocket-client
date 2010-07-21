@@ -17,7 +17,10 @@ package com.treegger.protobuf {
 		public function get description():String {
 			return description_;
 		}
-		protected override function writePostposeLength(output:PostposeLengthBuffer):void {
+		/**
+		 *  @private
+		 */
+		public override function writeToBuffer(output:WritingBuffer):void {
 			WriteUtils.writeTag(output, WireType.VARINT, 1);
 			WriteUtils.write_TYPE_UINT32(output, code);
 			if (hasDescription) {

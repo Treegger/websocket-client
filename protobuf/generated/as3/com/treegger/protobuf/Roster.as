@@ -9,7 +9,10 @@ package com.treegger.protobuf {
 	public final class Roster extends com.netease.protobuf.Message implements flash.utils.IExternalizable {
 		[ArrayElementType("com.treegger.protobuf.RosterItem")]
 		public var item:Array = [];
-		protected override function writePostposeLength(output:PostposeLengthBuffer):void {
+		/**
+		 *  @private
+		 */
+		public override function writeToBuffer(output:WritingBuffer):void {
 			for (var itemIndex:uint = 0; itemIndex < item.length; ++itemIndex) {
 				WriteUtils.writeTag(output, WireType.LENGTH_DELIMITED, 1);
 				WriteUtils.write_TYPE_MESSAGE(output, item[itemIndex]);

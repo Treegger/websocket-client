@@ -94,7 +94,10 @@ package com.treegger.protobuf {
 		public function get textMessage():com.treegger.protobuf.TextMessage {
 			return textMessage_;
 		}
-		protected override function writePostposeLength(output:PostposeLengthBuffer):void {
+		/**
+		 *  @private
+		 */
+		public override function writeToBuffer(output:WritingBuffer):void {
 			if (hasPing) {
 				WriteUtils.writeTag(output, WireType.LENGTH_DELIMITED, 1);
 				WriteUtils.write_TYPE_MESSAGE(output, ping);

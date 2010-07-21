@@ -9,7 +9,10 @@ package com.treegger.protobuf {
 		public var username:String;
 		public var password:String;
 		public var resource:String;
-		protected override function writePostposeLength(output:PostposeLengthBuffer):void {
+		/**
+		 *  @private
+		 */
+		public override function writeToBuffer(output:WritingBuffer):void {
 			WriteUtils.writeTag(output, WireType.LENGTH_DELIMITED, 1);
 			WriteUtils.write_TYPE_STRING(output, username);
 			WriteUtils.writeTag(output, WireType.LENGTH_DELIMITED, 2);
