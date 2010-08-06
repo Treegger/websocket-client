@@ -4,6 +4,7 @@ package com.treegger.protobuf {
 	import flash.utils.IDataInput;
 	import flash.errors.IOError;
 	import com.treegger.protobuf.BindRequest;
+	import com.treegger.protobuf.VCardRequest;
 	import com.treegger.protobuf.BindResponse;
 	import com.treegger.protobuf.AuthenticateResponse;
 	import com.treegger.protobuf.TextMessage;
@@ -94,6 +95,26 @@ package com.treegger.protobuf {
 		public function get textMessage():com.treegger.protobuf.TextMessage {
 			return textMessage_;
 		}
+		private var vcardRequest_:com.treegger.protobuf.VCardRequest;
+		public function get hasVcardRequest():Boolean {
+			return null != vcardRequest_;
+		}
+		public function set vcardRequest(value:com.treegger.protobuf.VCardRequest):void {
+			vcardRequest_ = value;
+		}
+		public function get vcardRequest():com.treegger.protobuf.VCardRequest {
+			return vcardRequest_;
+		}
+		private var vcardResponse_:com.treegger.protobuf.VCardRequest;
+		public function get hasVcardResponse():Boolean {
+			return null != vcardResponse_;
+		}
+		public function set vcardResponse(value:com.treegger.protobuf.VCardRequest):void {
+			vcardResponse_ = value;
+		}
+		public function get vcardResponse():com.treegger.protobuf.VCardRequest {
+			return vcardResponse_;
+		}
 		/**
 		 *  @private
 		 */
@@ -130,6 +151,14 @@ package com.treegger.protobuf {
 				WriteUtils.writeTag(output, WireType.LENGTH_DELIMITED, 8);
 				WriteUtils.write_TYPE_MESSAGE(output, textMessage);
 			}
+			if (hasVcardRequest) {
+				WriteUtils.writeTag(output, WireType.LENGTH_DELIMITED, 9);
+				WriteUtils.write_TYPE_MESSAGE(output, vcardRequest);
+			}
+			if (hasVcardResponse) {
+				WriteUtils.writeTag(output, WireType.LENGTH_DELIMITED, 10);
+				WriteUtils.write_TYPE_MESSAGE(output, vcardResponse);
+			}
 		}
 		public function readExternal(input:IDataInput):void {
 			var pingCount:uint = 0;
@@ -140,6 +169,8 @@ package com.treegger.protobuf {
 			var rosterCount:uint = 0;
 			var presenceCount:uint = 0;
 			var textMessageCount:uint = 0;
+			var vcardRequestCount:uint = 0;
+			var vcardResponseCount:uint = 0;
 			while (input.bytesAvailable != 0) {
 				var tag:Tag = ReadUtils.readTag(input);
 				switch (tag.number) {
@@ -206,6 +237,22 @@ package com.treegger.protobuf {
 					++textMessageCount;
 					textMessage = new com.treegger.protobuf.TextMessage;
 					ReadUtils.read_TYPE_MESSAGE(input, textMessage);
+					break;
+				case 9:
+					if (vcardRequestCount != 0) {
+						throw new IOError('Bad data format: WebSocketMessage.vcardRequest cannot be set twice.');
+					}
+					++vcardRequestCount;
+					vcardRequest = new com.treegger.protobuf.VCardRequest;
+					ReadUtils.read_TYPE_MESSAGE(input, vcardRequest);
+					break;
+				case 10:
+					if (vcardResponseCount != 0) {
+						throw new IOError('Bad data format: WebSocketMessage.vcardResponse cannot be set twice.');
+					}
+					++vcardResponseCount;
+					vcardResponse = new com.treegger.protobuf.VCardRequest;
+					ReadUtils.read_TYPE_MESSAGE(input, vcardResponse);
 					break;
 				default:
 					ReadUtils.skip(input, tag.wireType);
