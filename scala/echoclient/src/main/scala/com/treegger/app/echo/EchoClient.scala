@@ -82,11 +82,14 @@ class EchoClient
                 }
             }
             
-            else if( data.hasTextMessage && data.hasBody )
+            else if( data.hasTextMessage )
             {
                 val textMessage = data.getTextMessage
-                println("Echo to: " + textMessage.getFromUser )
-                sendMessage( textMessage.getFromUser, textMessage.getBody )
+		if( textMessage.hasBody )
+		{
+                	println("Echo to: " + textMessage.getFromUser )
+                	sendMessage( textMessage.getFromUser, textMessage.getBody )
+		}
             }
         }
 
