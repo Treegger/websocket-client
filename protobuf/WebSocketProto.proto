@@ -64,9 +64,10 @@ message VCardRequest
 }
 message VCardResponse
 {
-	optional string fn = 1;
-	optional string nickname = 2;
-	optional string photoExternal = 3;
+	optional string fromUser = 1;    
+	optional string fn = 2;
+	optional string nickname = 3;
+	optional string photoExternal = 4;
 }
 
 message Roster

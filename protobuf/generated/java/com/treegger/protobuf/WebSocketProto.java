@@ -3161,22 +3161,29 @@ public final class WebSocketProto {
       return com.treegger.protobuf.WebSocketProto.internal_static_com_treegger_protobuf_VCardResponse_fieldAccessorTable;
     }
     
-    // optional string fn = 1;
-    public static final int FN_FIELD_NUMBER = 1;
+    // optional string fromUser = 1;
+    public static final int FROMUSER_FIELD_NUMBER = 1;
+    private boolean hasFromUser;
+    private java.lang.String fromUser_ = "";
+    public boolean hasFromUser() { return hasFromUser; }
+    public java.lang.String getFromUser() { return fromUser_; }
+    
+    // optional string fn = 2;
+    public static final int FN_FIELD_NUMBER = 2;
     private boolean hasFn;
     private java.lang.String fn_ = "";
     public boolean hasFn() { return hasFn; }
     public java.lang.String getFn() { return fn_; }
     
-    // optional string nickname = 2;
-    public static final int NICKNAME_FIELD_NUMBER = 2;
+    // optional string nickname = 3;
+    public static final int NICKNAME_FIELD_NUMBER = 3;
     private boolean hasNickname;
     private java.lang.String nickname_ = "";
     public boolean hasNickname() { return hasNickname; }
     public java.lang.String getNickname() { return nickname_; }
     
-    // optional string photoExternal = 3;
-    public static final int PHOTOEXTERNAL_FIELD_NUMBER = 3;
+    // optional string photoExternal = 4;
+    public static final int PHOTOEXTERNAL_FIELD_NUMBER = 4;
     private boolean hasPhotoExternal;
     private java.lang.String photoExternal_ = "";
     public boolean hasPhotoExternal() { return hasPhotoExternal; }
@@ -3191,14 +3198,17 @@ public final class WebSocketProto {
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
+      if (hasFromUser()) {
+        output.writeString(1, getFromUser());
+      }
       if (hasFn()) {
-        output.writeString(1, getFn());
+        output.writeString(2, getFn());
       }
       if (hasNickname()) {
-        output.writeString(2, getNickname());
+        output.writeString(3, getNickname());
       }
       if (hasPhotoExternal()) {
-        output.writeString(3, getPhotoExternal());
+        output.writeString(4, getPhotoExternal());
       }
       getUnknownFields().writeTo(output);
     }
@@ -3209,17 +3219,21 @@ public final class WebSocketProto {
       if (size != -1) return size;
     
       size = 0;
+      if (hasFromUser()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeStringSize(1, getFromUser());
+      }
       if (hasFn()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(1, getFn());
+          .computeStringSize(2, getFn());
       }
       if (hasNickname()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(2, getNickname());
+          .computeStringSize(3, getNickname());
       }
       if (hasPhotoExternal()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(3, getPhotoExternal());
+          .computeStringSize(4, getPhotoExternal());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -3379,6 +3393,9 @@ public final class WebSocketProto {
       
       public Builder mergeFrom(com.treegger.protobuf.WebSocketProto.VCardResponse other) {
         if (other == com.treegger.protobuf.WebSocketProto.VCardResponse.getDefaultInstance()) return this;
+        if (other.hasFromUser()) {
+          setFromUser(other.getFromUser());
+        }
         if (other.hasFn()) {
           setFn(other.getFn());
         }
@@ -3414,14 +3431,18 @@ public final class WebSocketProto {
               break;
             }
             case 10: {
-              setFn(input.readString());
+              setFromUser(input.readString());
               break;
             }
             case 18: {
-              setNickname(input.readString());
+              setFn(input.readString());
               break;
             }
             case 26: {
+              setNickname(input.readString());
+              break;
+            }
+            case 34: {
               setPhotoExternal(input.readString());
               break;
             }
@@ -3430,7 +3451,28 @@ public final class WebSocketProto {
       }
       
       
-      // optional string fn = 1;
+      // optional string fromUser = 1;
+      public boolean hasFromUser() {
+        return result.hasFromUser();
+      }
+      public java.lang.String getFromUser() {
+        return result.getFromUser();
+      }
+      public Builder setFromUser(java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  result.hasFromUser = true;
+        result.fromUser_ = value;
+        return this;
+      }
+      public Builder clearFromUser() {
+        result.hasFromUser = false;
+        result.fromUser_ = getDefaultInstance().getFromUser();
+        return this;
+      }
+      
+      // optional string fn = 2;
       public boolean hasFn() {
         return result.hasFn();
       }
@@ -3451,7 +3493,7 @@ public final class WebSocketProto {
         return this;
       }
       
-      // optional string nickname = 2;
+      // optional string nickname = 3;
       public boolean hasNickname() {
         return result.hasNickname();
       }
@@ -3472,7 +3514,7 @@ public final class WebSocketProto {
         return this;
       }
       
-      // optional string photoExternal = 3;
+      // optional string photoExternal = 4;
       public boolean hasPhotoExternal() {
         return result.hasPhotoExternal();
       }
@@ -5502,19 +5544,19 @@ public final class WebSocketProto {
       "onId\030\002 \001(\t\022\024\n\014errorMessage\030\003 \001(\t\" \n\013Bind" +
       "Request\022\021\n\tsessionId\030\001 \002(\t\"!\n\014BindRespon" +
       "se\022\021\n\tsessionId\030\001 \001(\t\" \n\014VCardRequest\022\020\n" +
-      "\010username\030\001 \002(\t\"D\n\rVCardResponse\022\n\n\002fn\030\001" +
-      " \001(\t\022\020\n\010nickname\030\002 \001(\t\022\025\n\rphotoExternal\030" +
-      "\003 \001(\t\"9\n\006Roster\022/\n\004item\030\001 \003(\0132!.com.tree" +
-      "gger.protobuf.RosterItem\"P\n\nRosterItem\022\014" +
-      "\n\004name\030\001 \002(\t\022\013\n\003jid\030\002 \002(\t\022\024\n\014subscriptio" +
-      "n\030\003 \002(\t\022\021\n\titemGroup\030\004 \002(\t\"D\n\010Presence\022\014",
-      "\n\004from\030\001 \002(\t\022\014\n\004type\030\002 \001(\t\022\014\n\004show\030\003 \001(\t" +
-      "\022\016\n\006status\030\004 \001(\t\"\313\001\n\013TextMessage\022\n\n\002id\030\001" +
-      " \001(\t\022\016\n\006toUser\030\002 \001(\t\022\020\n\010fromUser\030\003 \001(\t\022\014" +
-      "\n\004type\030\004 \001(\t\022\017\n\007subject\030\005 \001(\t\022\014\n\004body\030\006 " +
-      "\001(\t\022\016\n\006thread\030\007 \001(\t\022\016\n\006active\030\010 \001(\010\022\021\n\tc" +
-      "omposing\030\t \001(\010\022\016\n\006paused\030\n \001(\010\022\020\n\010inacti" +
-      "ve\030\013 \001(\010\022\014\n\004gone\030\014 \001(\010"
+      "\010username\030\001 \002(\t\"V\n\rVCardResponse\022\020\n\010from" +
+      "User\030\001 \001(\t\022\n\n\002fn\030\002 \001(\t\022\020\n\010nickname\030\003 \001(\t" +
+      "\022\025\n\rphotoExternal\030\004 \001(\t\"9\n\006Roster\022/\n\004ite" +
+      "m\030\001 \003(\0132!.com.treegger.protobuf.RosterIt" +
+      "em\"P\n\nRosterItem\022\014\n\004name\030\001 \002(\t\022\013\n\003jid\030\002 " +
+      "\002(\t\022\024\n\014subscription\030\003 \002(\t\022\021\n\titemGroup\030\004",
+      " \002(\t\"D\n\010Presence\022\014\n\004from\030\001 \002(\t\022\014\n\004type\030\002" +
+      " \001(\t\022\014\n\004show\030\003 \001(\t\022\016\n\006status\030\004 \001(\t\"\313\001\n\013T" +
+      "extMessage\022\n\n\002id\030\001 \001(\t\022\016\n\006toUser\030\002 \001(\t\022\020" +
+      "\n\010fromUser\030\003 \001(\t\022\014\n\004type\030\004 \001(\t\022\017\n\007subjec" +
+      "t\030\005 \001(\t\022\014\n\004body\030\006 \001(\t\022\016\n\006thread\030\007 \001(\t\022\016\n" +
+      "\006active\030\010 \001(\010\022\021\n\tcomposing\030\t \001(\010\022\016\n\006paus" +
+      "ed\030\n \001(\010\022\020\n\010inactive\030\013 \001(\010\022\014\n\004gone\030\014 \001(\010"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -5590,7 +5632,7 @@ public final class WebSocketProto {
           internal_static_com_treegger_protobuf_VCardResponse_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_treegger_protobuf_VCardResponse_descriptor,
-              new java.lang.String[] { "Fn", "Nickname", "PhotoExternal", },
+              new java.lang.String[] { "FromUser", "Fn", "Nickname", "PhotoExternal", },
               com.treegger.protobuf.WebSocketProto.VCardResponse.class,
               com.treegger.protobuf.WebSocketProto.VCardResponse.Builder.class);
           internal_static_com_treegger_protobuf_Roster_descriptor =
