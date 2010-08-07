@@ -19,7 +19,7 @@ message WebSocketMessage
 	optional TextMessage textMessage = 8;
 	
 	optional VCardRequest vcardRequest = 9;
-	optional VCardRequest vcardResponse = 10;
+	optional VCardResponse vcardResponse = 10;
 	
 }
 

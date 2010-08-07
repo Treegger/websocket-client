@@ -4,7 +4,7 @@ Protobuf required to generate the sources:
 - Protoc-gen-as3 http://code.google.com/p/protoc-gen-as3/ to generate AS3 sources
 - ProtocolBuffers http://code.google.com/p/metasyntactic/wiki/ProtocolBuffers to generate Objective C sources
 
-For convenience, we have generated the sources for javascript, as3 and java in 'generated' folder. Those files might not be up to date. 
+For convenience, we have generated the sources for javascript, as3, objc and java in 'generated' folder. Those files might not be up to date. 
 
 Uncomment "option optimize_for" line if you need optimization (for Android build for ex)
 http://code.google.com/apis/protocolbuffers/docs/proto.html#options
