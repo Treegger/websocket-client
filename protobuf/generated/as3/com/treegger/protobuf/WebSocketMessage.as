@@ -4,6 +4,7 @@ package com.treegger.protobuf {
 	import flash.utils.IDataInput;
 	import flash.errors.IOError;
 	import com.treegger.protobuf.BindRequest;
+	import com.treegger.protobuf.VCardResponse;
 	import com.treegger.protobuf.VCardRequest;
 	import com.treegger.protobuf.BindResponse;
 	import com.treegger.protobuf.AuthenticateResponse;
@@ -105,14 +106,14 @@ package com.treegger.protobuf {
 		public function get vcardRequest():com.treegger.protobuf.VCardRequest {
 			return vcardRequest_;
 		}
-		private var vcardResponse_:com.treegger.protobuf.VCardRequest;
+		private var vcardResponse_:com.treegger.protobuf.VCardResponse;
 		public function get hasVcardResponse():Boolean {
 			return null != vcardResponse_;
 		}
-		public function set vcardResponse(value:com.treegger.protobuf.VCardRequest):void {
+		public function set vcardResponse(value:com.treegger.protobuf.VCardResponse):void {
 			vcardResponse_ = value;
 		}
-		public function get vcardResponse():com.treegger.protobuf.VCardRequest {
+		public function get vcardResponse():com.treegger.protobuf.VCardResponse {
 			return vcardResponse_;
 		}
 		/**
@@ -251,7 +252,7 @@ package com.treegger.protobuf {
 						throw new IOError('Bad data format: WebSocketMessage.vcardResponse cannot be set twice.');
 					}
 					++vcardResponseCount;
-					vcardResponse = new com.treegger.protobuf.VCardRequest;
+					vcardResponse = new com.treegger.protobuf.VCardResponse;
 					ReadUtils.read_TYPE_MESSAGE(input, vcardResponse);
 					break;
 				default:
