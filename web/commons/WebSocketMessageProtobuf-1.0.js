@@ -50,6 +50,18 @@ com.treegger.protobuf.WebSocketMessage = PROTO.Message("com.treegger.protobuf.We
 		multiplicity: PROTO.optional,
 		type: function(){return com.treegger.protobuf.TextMessage;},
 		id: 8
+	},
+	vcardRequest: {
+		options: {},
+		multiplicity: PROTO.optional,
+		type: function(){return com.treegger.protobuf.VCardRequest;},
+		id: 9
+	},
+	vcardResponse: {
+		options: {},
+		multiplicity: PROTO.optional,
+		type: function(){return com.treegger.protobuf.VCardResponse;},
+		id: 10
 	}});
 com.treegger.protobuf.Error = PROTO.Message("com.treegger.protobuf.Error",{
 	code: {
@@ -122,6 +134,38 @@ com.treegger.protobuf.BindResponse = PROTO.Message("com.treegger.protobuf.BindRe
 		multiplicity: PROTO.optional,
 		type: function(){return PROTO.string;},
 		id: 1
+	}});
+com.treegger.protobuf.VCardRequest = PROTO.Message("com.treegger.protobuf.VCardRequest",{
+	username: {
+		options: {},
+		multiplicity: PROTO.required,
+		type: function(){return PROTO.string;},
+		id: 1
+	}});
+com.treegger.protobuf.VCardResponse = PROTO.Message("com.treegger.protobuf.VCardResponse",{
+	fromUser: {
+		options: {},
+		multiplicity: PROTO.optional,
+		type: function(){return PROTO.string;},
+		id: 1
+	},
+	fn: {
+		options: {},
+		multiplicity: PROTO.optional,
+		type: function(){return PROTO.string;},
+		id: 2
+	},
+	nickname: {
+		options: {},
+		multiplicity: PROTO.optional,
+		type: function(){return PROTO.string;},
+		id: 3
+	},
+	photoExternal: {
+		options: {},
+		multiplicity: PROTO.optional,
+		type: function(){return PROTO.string;},
+		id: 4
 	}});
 com.treegger.protobuf.Roster = PROTO.Message("com.treegger.protobuf.Roster",{
 	item: {
