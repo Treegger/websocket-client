@@ -6,6 +6,16 @@ package com.treegger.protobuf {
 	// @@protoc_insertion_point(imports)
 	// @@protoc_insertion_point(class_metadata)
 	public final class VCardResponse extends com.netease.protobuf.Message implements flash.utils.IExternalizable {
+		private var fromUser_:String;
+		public function get hasFromUser():Boolean {
+			return null != fromUser_;
+		}
+		public function set fromUser(value:String):void {
+			fromUser_ = value;
+		}
+		public function get fromUser():String {
+			return fromUser_;
+		}
 		private var fn_:String;
 		public function get hasFn():Boolean {
 			return null != fn_;
@@ -40,20 +50,25 @@ package com.treegger.protobuf {
 		 *  @private
 		 */
 		public override function writeToBuffer(output:WritingBuffer):void {
-			if (hasFn) {
+			if (hasFromUser) {
 				WriteUtils.writeTag(output, WireType.LENGTH_DELIMITED, 1);
+				WriteUtils.write_TYPE_STRING(output, fromUser);
+			}
+			if (hasFn) {
+				WriteUtils.writeTag(output, WireType.LENGTH_DELIMITED, 2);
 				WriteUtils.write_TYPE_STRING(output, fn);
 			}
 			if (hasNickname) {
-				WriteUtils.writeTag(output, WireType.LENGTH_DELIMITED, 2);
+				WriteUtils.writeTag(output, WireType.LENGTH_DELIMITED, 3);
 				WriteUtils.write_TYPE_STRING(output, nickname);
 			}
 			if (hasPhotoExternal) {
-				WriteUtils.writeTag(output, WireType.LENGTH_DELIMITED, 3);
+				WriteUtils.writeTag(output, WireType.LENGTH_DELIMITED, 4);
 				WriteUtils.write_TYPE_STRING(output, photoExternal);
 			}
 		}
 		public function readExternal(input:IDataInput):void {
+			var fromUserCount:uint = 0;
 			var fnCount:uint = 0;
 			var nicknameCount:uint = 0;
 			var photoExternalCount:uint = 0;
@@ -61,20 +76,27 @@ package com.treegger.protobuf {
 				var tag:Tag = ReadUtils.readTag(input);
 				switch (tag.number) {
 				case 1:
+					if (fromUserCount != 0) {
+						throw new IOError('Bad data format: VCardResponse.fromUser cannot be set twice.');
+					}
+					++fromUserCount;
+					fromUser = ReadUtils.read_TYPE_STRING(input);
+					break;
+				case 2:
 					if (fnCount != 0) {
 						throw new IOError('Bad data format: VCardResponse.fn cannot be set twice.');
 					}
 					++fnCount;
 					fn = ReadUtils.read_TYPE_STRING(input);
 					break;
-				case 2:
+				case 3:
 					if (nicknameCount != 0) {
 						throw new IOError('Bad data format: VCardResponse.nickname cannot be set twice.');
 					}
 					++nicknameCount;
 					nickname = ReadUtils.read_TYPE_STRING(input);
 					break;
-				case 3:
+				case 4:
 					if (photoExternalCount != 0) {
 						throw new IOError('Bad data format: VCardResponse.photoExternal cannot be set twice.');
 					}
