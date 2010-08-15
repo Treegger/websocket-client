@@ -42,6 +42,7 @@ message AuthenticateRequest
 	required string username = 1;
 	required string password = 2;
 	required string resource = 3;
+	optional string sessionId = 4;
 }
 message AuthenticateResponse
 {
