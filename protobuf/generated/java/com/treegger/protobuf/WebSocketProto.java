@@ -1573,6 +1573,13 @@ public final class WebSocketProto {
     public boolean hasResource() { return hasResource; }
     public java.lang.String getResource() { return resource_; }
     
+    // optional string sessionId = 4;
+    public static final int SESSIONID_FIELD_NUMBER = 4;
+    private boolean hasSessionId;
+    private java.lang.String sessionId_ = "";
+    public boolean hasSessionId() { return hasSessionId; }
+    public java.lang.String getSessionId() { return sessionId_; }
+    
     private void initFields() {
     }
     public final boolean isInitialized() {
@@ -1594,6 +1601,9 @@ public final class WebSocketProto {
       if (hasResource()) {
         output.writeString(3, getResource());
       }
+      if (hasSessionId()) {
+        output.writeString(4, getSessionId());
+      }
       getUnknownFields().writeTo(output);
     }
     
@@ -1614,6 +1624,10 @@ public final class WebSocketProto {
       if (hasResource()) {
         size += com.google.protobuf.CodedOutputStream
           .computeStringSize(3, getResource());
+      }
+      if (hasSessionId()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeStringSize(4, getSessionId());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -1782,6 +1796,9 @@ public final class WebSocketProto {
         if (other.hasResource()) {
           setResource(other.getResource());
         }
+        if (other.hasSessionId()) {
+          setSessionId(other.getSessionId());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
@@ -1817,6 +1834,10 @@ public final class WebSocketProto {
             }
             case 26: {
               setResource(input.readString());
+              break;
+            }
+            case 34: {
+              setSessionId(input.readString());
               break;
             }
           }
@@ -1884,6 +1905,27 @@ public final class WebSocketProto {
       public Builder clearResource() {
         result.hasResource = false;
         result.resource_ = getDefaultInstance().getResource();
+        return this;
+      }
+      
+      // optional string sessionId = 4;
+      public boolean hasSessionId() {
+        return result.hasSessionId();
+      }
+      public java.lang.String getSessionId() {
+        return result.getSessionId();
+      }
+      public Builder setSessionId(java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  result.hasSessionId = true;
+        result.sessionId_ = value;
+        return this;
+      }
+      public Builder clearSessionId() {
+        result.hasSessionId = false;
+        result.sessionId_ = getDefaultInstance().getSessionId();
         return this;
       }
       
@@ -5537,26 +5579,27 @@ public final class WebSocketProto {
       "egger.protobuf.VCardRequest\022;\n\rvcardResp" +
       "onse\030\n \001(\0132$.com.treegger.protobuf.VCard" +
       "Response\"*\n\005Error\022\014\n\004code\030\001 \002(\r\022\023\n\013descr" +
-      "iption\030\002 \001(\t\"\022\n\004Ping\022\n\n\002id\030\001 \001(\t\"K\n\023Auth" +
+      "iption\030\002 \001(\t\"\022\n\004Ping\022\n\n\002id\030\001 \001(\t\"^\n\023Auth" +
       "enticateRequest\022\020\n\010username\030\001 \002(\t\022\020\n\010pas" +
-      "sword\030\002 \002(\t\022\020\n\010resource\030\003 \002(\t\"Q\n\024Authent",
-      "icateResponse\022\020\n\010username\030\001 \002(\t\022\021\n\tsessi" +
-      "onId\030\002 \001(\t\022\024\n\014errorMessage\030\003 \001(\t\" \n\013Bind" +
-      "Request\022\021\n\tsessionId\030\001 \002(\t\"!\n\014BindRespon" +
-      "se\022\021\n\tsessionId\030\001 \001(\t\" \n\014VCardRequest\022\020\n" +
-      "\010username\030\001 \002(\t\"V\n\rVCardResponse\022\020\n\010from" +
-      "User\030\001 \001(\t\022\n\n\002fn\030\002 \001(\t\022\020\n\010nickname\030\003 \001(\t" +
-      "\022\025\n\rphotoExternal\030\004 \001(\t\"9\n\006Roster\022/\n\004ite" +
-      "m\030\001 \003(\0132!.com.treegger.protobuf.RosterIt" +
-      "em\"P\n\nRosterItem\022\014\n\004name\030\001 \002(\t\022\013\n\003jid\030\002 " +
-      "\002(\t\022\024\n\014subscription\030\003 \002(\t\022\021\n\titemGroup\030\004",
-      " \002(\t\"D\n\010Presence\022\014\n\004from\030\001 \002(\t\022\014\n\004type\030\002" +
-      " \001(\t\022\014\n\004show\030\003 \001(\t\022\016\n\006status\030\004 \001(\t\"\313\001\n\013T" +
-      "extMessage\022\n\n\002id\030\001 \001(\t\022\016\n\006toUser\030\002 \001(\t\022\020" +
-      "\n\010fromUser\030\003 \001(\t\022\014\n\004type\030\004 \001(\t\022\017\n\007subjec" +
-      "t\030\005 \001(\t\022\014\n\004body\030\006 \001(\t\022\016\n\006thread\030\007 \001(\t\022\016\n" +
-      "\006active\030\010 \001(\010\022\021\n\tcomposing\030\t \001(\010\022\016\n\006paus" +
-      "ed\030\n \001(\010\022\020\n\010inactive\030\013 \001(\010\022\014\n\004gone\030\014 \001(\010"
+      "sword\030\002 \002(\t\022\020\n\010resource\030\003 \002(\t\022\021\n\tsession",
+      "Id\030\004 \001(\t\"Q\n\024AuthenticateResponse\022\020\n\010user" +
+      "name\030\001 \002(\t\022\021\n\tsessionId\030\002 \001(\t\022\024\n\014errorMe" +
+      "ssage\030\003 \001(\t\" \n\013BindRequest\022\021\n\tsessionId\030" +
+      "\001 \002(\t\"!\n\014BindResponse\022\021\n\tsessionId\030\001 \001(\t" +
+      "\" \n\014VCardRequest\022\020\n\010username\030\001 \002(\t\"V\n\rVC" +
+      "ardResponse\022\020\n\010fromUser\030\001 \001(\t\022\n\n\002fn\030\002 \001(" +
+      "\t\022\020\n\010nickname\030\003 \001(\t\022\025\n\rphotoExternal\030\004 \001" +
+      "(\t\"9\n\006Roster\022/\n\004item\030\001 \003(\0132!.com.treegge" +
+      "r.protobuf.RosterItem\"P\n\nRosterItem\022\014\n\004n" +
+      "ame\030\001 \002(\t\022\013\n\003jid\030\002 \002(\t\022\024\n\014subscription\030\003",
+      " \002(\t\022\021\n\titemGroup\030\004 \002(\t\"D\n\010Presence\022\014\n\004f" +
+      "rom\030\001 \002(\t\022\014\n\004type\030\002 \001(\t\022\014\n\004show\030\003 \001(\t\022\016\n" +
+      "\006status\030\004 \001(\t\"\313\001\n\013TextMessage\022\n\n\002id\030\001 \001(" +
+      "\t\022\016\n\006toUser\030\002 \001(\t\022\020\n\010fromUser\030\003 \001(\t\022\014\n\004t" +
+      "ype\030\004 \001(\t\022\017\n\007subject\030\005 \001(\t\022\014\n\004body\030\006 \001(\t" +
+      "\022\016\n\006thread\030\007 \001(\t\022\016\n\006active\030\010 \001(\010\022\021\n\tcomp" +
+      "osing\030\t \001(\010\022\016\n\006paused\030\n \001(\010\022\020\n\010inactive\030" +
+      "\013 \001(\010\022\014\n\004gone\030\014 \001(\010"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -5592,7 +5635,7 @@ public final class WebSocketProto {
           internal_static_com_treegger_protobuf_AuthenticateRequest_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_treegger_protobuf_AuthenticateRequest_descriptor,
-              new java.lang.String[] { "Username", "Password", "Resource", },
+              new java.lang.String[] { "Username", "Password", "Resource", "SessionId", },
               com.treegger.protobuf.WebSocketProto.AuthenticateRequest.class,
               com.treegger.protobuf.WebSocketProto.AuthenticateRequest.Builder.class);
           internal_static_com_treegger_protobuf_AuthenticateResponse_descriptor =
