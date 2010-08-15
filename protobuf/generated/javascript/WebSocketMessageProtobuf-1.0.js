@@ -101,6 +101,12 @@ com.treegger.protobuf.AuthenticateRequest = PROTO.Message("com.treegger.protobuf
 		multiplicity: PROTO.required,
 		type: function(){return PROTO.string;},
 		id: 3
+	},
+	sessionId: {
+		options: {},
+		multiplicity: PROTO.optional,
+		type: function(){return PROTO.string;},
+		id: 4
 	}});
 com.treegger.protobuf.AuthenticateResponse = PROTO.Message("com.treegger.protobuf.AuthenticateResponse",{
 	username: {
