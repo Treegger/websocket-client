@@ -91,6 +91,20 @@ public final class WebSocketProto {
     public boolean hasTextMessage() { return hasTextMessage; }
     public com.treegger.protobuf.WebSocketProto.TextMessage getTextMessage() { return textMessage_; }
     
+    // optional .com.treegger.protobuf.VCardRequest vcardRequest = 9;
+    public static final int VCARDREQUEST_FIELD_NUMBER = 9;
+    private boolean hasVcardRequest;
+    private com.treegger.protobuf.WebSocketProto.VCardRequest vcardRequest_;
+    public boolean hasVcardRequest() { return hasVcardRequest; }
+    public com.treegger.protobuf.WebSocketProto.VCardRequest getVcardRequest() { return vcardRequest_; }
+    
+    // optional .com.treegger.protobuf.VCardResponse vcardResponse = 10;
+    public static final int VCARDRESPONSE_FIELD_NUMBER = 10;
+    private boolean hasVcardResponse;
+    private com.treegger.protobuf.WebSocketProto.VCardResponse vcardResponse_;
+    public boolean hasVcardResponse() { return hasVcardResponse; }
+    public com.treegger.protobuf.WebSocketProto.VCardResponse getVcardResponse() { return vcardResponse_; }
+    
     private void initFields() {
       ping_ = com.treegger.protobuf.WebSocketProto.Ping.getDefaultInstance();
       authenticateRequest_ = com.treegger.protobuf.WebSocketProto.AuthenticateRequest.getDefaultInstance();
@@ -100,6 +114,8 @@ public final class WebSocketProto {
       roster_ = com.treegger.protobuf.WebSocketProto.Roster.getDefaultInstance();
       presence_ = com.treegger.protobuf.WebSocketProto.Presence.getDefaultInstance();
       textMessage_ = com.treegger.protobuf.WebSocketProto.TextMessage.getDefaultInstance();
+      vcardRequest_ = com.treegger.protobuf.WebSocketProto.VCardRequest.getDefaultInstance();
+      vcardResponse_ = com.treegger.protobuf.WebSocketProto.VCardResponse.getDefaultInstance();
     }
     public final boolean isInitialized() {
       if (hasAuthenticateRequest()) {
@@ -116,6 +132,9 @@ public final class WebSocketProto {
       }
       if (hasPresence()) {
         if (!getPresence().isInitialized()) return false;
+      }
+      if (hasVcardRequest()) {
+        if (!getVcardRequest().isInitialized()) return false;
       }
       return true;
     }
@@ -146,6 +165,12 @@ public final class WebSocketProto {
       }
       if (hasTextMessage()) {
         output.writeMessage(8, getTextMessage());
+      }
+      if (hasVcardRequest()) {
+        output.writeMessage(9, getVcardRequest());
+      }
+      if (hasVcardResponse()) {
+        output.writeMessage(10, getVcardResponse());
       }
       getUnknownFields().writeTo(output);
     }
@@ -187,6 +212,14 @@ public final class WebSocketProto {
       if (hasTextMessage()) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(8, getTextMessage());
+      }
+      if (hasVcardRequest()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(9, getVcardRequest());
+      }
+      if (hasVcardResponse()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(10, getVcardResponse());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -370,6 +403,12 @@ public final class WebSocketProto {
         if (other.hasTextMessage()) {
           mergeTextMessage(other.getTextMessage());
         }
+        if (other.hasVcardRequest()) {
+          mergeVcardRequest(other.getVcardRequest());
+        }
+        if (other.hasVcardResponse()) {
+          mergeVcardResponse(other.getVcardResponse());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
@@ -465,6 +504,24 @@ public final class WebSocketProto {
               }
               input.readMessage(subBuilder, extensionRegistry);
               setTextMessage(subBuilder.buildPartial());
+              break;
+            }
+            case 74: {
+              com.treegger.protobuf.WebSocketProto.VCardRequest.Builder subBuilder = com.treegger.protobuf.WebSocketProto.VCardRequest.newBuilder();
+              if (hasVcardRequest()) {
+                subBuilder.mergeFrom(getVcardRequest());
+              }
+              input.readMessage(subBuilder, extensionRegistry);
+              setVcardRequest(subBuilder.buildPartial());
+              break;
+            }
+            case 82: {
+              com.treegger.protobuf.WebSocketProto.VCardResponse.Builder subBuilder = com.treegger.protobuf.WebSocketProto.VCardResponse.newBuilder();
+              if (hasVcardResponse()) {
+                subBuilder.mergeFrom(getVcardResponse());
+              }
+              input.readMessage(subBuilder, extensionRegistry);
+              setVcardResponse(subBuilder.buildPartial());
               break;
             }
           }
@@ -765,6 +822,80 @@ public final class WebSocketProto {
       public Builder clearTextMessage() {
         result.hasTextMessage = false;
         result.textMessage_ = com.treegger.protobuf.WebSocketProto.TextMessage.getDefaultInstance();
+        return this;
+      }
+      
+      // optional .com.treegger.protobuf.VCardRequest vcardRequest = 9;
+      public boolean hasVcardRequest() {
+        return result.hasVcardRequest();
+      }
+      public com.treegger.protobuf.WebSocketProto.VCardRequest getVcardRequest() {
+        return result.getVcardRequest();
+      }
+      public Builder setVcardRequest(com.treegger.protobuf.WebSocketProto.VCardRequest value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        result.hasVcardRequest = true;
+        result.vcardRequest_ = value;
+        return this;
+      }
+      public Builder setVcardRequest(com.treegger.protobuf.WebSocketProto.VCardRequest.Builder builderForValue) {
+        result.hasVcardRequest = true;
+        result.vcardRequest_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeVcardRequest(com.treegger.protobuf.WebSocketProto.VCardRequest value) {
+        if (result.hasVcardRequest() &&
+            result.vcardRequest_ != com.treegger.protobuf.WebSocketProto.VCardRequest.getDefaultInstance()) {
+          result.vcardRequest_ =
+            com.treegger.protobuf.WebSocketProto.VCardRequest.newBuilder(result.vcardRequest_).mergeFrom(value).buildPartial();
+        } else {
+          result.vcardRequest_ = value;
+        }
+        result.hasVcardRequest = true;
+        return this;
+      }
+      public Builder clearVcardRequest() {
+        result.hasVcardRequest = false;
+        result.vcardRequest_ = com.treegger.protobuf.WebSocketProto.VCardRequest.getDefaultInstance();
+        return this;
+      }
+      
+      // optional .com.treegger.protobuf.VCardResponse vcardResponse = 10;
+      public boolean hasVcardResponse() {
+        return result.hasVcardResponse();
+      }
+      public com.treegger.protobuf.WebSocketProto.VCardResponse getVcardResponse() {
+        return result.getVcardResponse();
+      }
+      public Builder setVcardResponse(com.treegger.protobuf.WebSocketProto.VCardResponse value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        result.hasVcardResponse = true;
+        result.vcardResponse_ = value;
+        return this;
+      }
+      public Builder setVcardResponse(com.treegger.protobuf.WebSocketProto.VCardResponse.Builder builderForValue) {
+        result.hasVcardResponse = true;
+        result.vcardResponse_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeVcardResponse(com.treegger.protobuf.WebSocketProto.VCardResponse value) {
+        if (result.hasVcardResponse() &&
+            result.vcardResponse_ != com.treegger.protobuf.WebSocketProto.VCardResponse.getDefaultInstance()) {
+          result.vcardResponse_ =
+            com.treegger.protobuf.WebSocketProto.VCardResponse.newBuilder(result.vcardResponse_).mergeFrom(value).buildPartial();
+        } else {
+          result.vcardResponse_ = value;
+        }
+        result.hasVcardResponse = true;
+        return this;
+      }
+      public Builder clearVcardResponse() {
+        result.hasVcardResponse = false;
+        result.vcardResponse_ = com.treegger.protobuf.WebSocketProto.VCardResponse.getDefaultInstance();
         return this;
       }
       
@@ -1442,6 +1573,13 @@ public final class WebSocketProto {
     public boolean hasResource() { return hasResource; }
     public java.lang.String getResource() { return resource_; }
     
+    // optional string sessionId = 4;
+    public static final int SESSIONID_FIELD_NUMBER = 4;
+    private boolean hasSessionId;
+    private java.lang.String sessionId_ = "";
+    public boolean hasSessionId() { return hasSessionId; }
+    public java.lang.String getSessionId() { return sessionId_; }
+    
     private void initFields() {
     }
     public final boolean isInitialized() {
@@ -1463,6 +1601,9 @@ public final class WebSocketProto {
       if (hasResource()) {
         output.writeString(3, getResource());
       }
+      if (hasSessionId()) {
+        output.writeString(4, getSessionId());
+      }
       getUnknownFields().writeTo(output);
     }
     
@@ -1483,6 +1624,10 @@ public final class WebSocketProto {
       if (hasResource()) {
         size += com.google.protobuf.CodedOutputStream
           .computeStringSize(3, getResource());
+      }
+      if (hasSessionId()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeStringSize(4, getSessionId());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -1651,6 +1796,9 @@ public final class WebSocketProto {
         if (other.hasResource()) {
           setResource(other.getResource());
         }
+        if (other.hasSessionId()) {
+          setSessionId(other.getSessionId());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
@@ -1686,6 +1834,10 @@ public final class WebSocketProto {
             }
             case 26: {
               setResource(input.readString());
+              break;
+            }
+            case 34: {
+              setSessionId(input.readString());
               break;
             }
           }
@@ -1753,6 +1905,27 @@ public final class WebSocketProto {
       public Builder clearResource() {
         result.hasResource = false;
         result.resource_ = getDefaultInstance().getResource();
+        return this;
+      }
+      
+      // optional string sessionId = 4;
+      public boolean hasSessionId() {
+        return result.hasSessionId();
+      }
+      public java.lang.String getSessionId() {
+        return result.getSessionId();
+      }
+      public Builder setSessionId(java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  result.hasSessionId = true;
+        result.sessionId_ = value;
+        return this;
+      }
+      public Builder clearSessionId() {
+        result.hasSessionId = false;
+        result.sessionId_ = getDefaultInstance().getSessionId();
         return this;
       }
       
@@ -2713,6 +2886,707 @@ public final class WebSocketProto {
     }
     
     // @@protoc_insertion_point(class_scope:com.treegger.protobuf.BindResponse)
+  }
+  
+  public static final class VCardRequest extends
+      com.google.protobuf.GeneratedMessage {
+    // Use VCardRequest.newBuilder() to construct.
+    private VCardRequest() {
+      initFields();
+    }
+    private VCardRequest(boolean noInit) {}
+    
+    private static final VCardRequest defaultInstance;
+    public static VCardRequest getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public VCardRequest getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.treegger.protobuf.WebSocketProto.internal_static_com_treegger_protobuf_VCardRequest_descriptor;
+    }
+    
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.treegger.protobuf.WebSocketProto.internal_static_com_treegger_protobuf_VCardRequest_fieldAccessorTable;
+    }
+    
+    // required string username = 1;
+    public static final int USERNAME_FIELD_NUMBER = 1;
+    private boolean hasUsername;
+    private java.lang.String username_ = "";
+    public boolean hasUsername() { return hasUsername; }
+    public java.lang.String getUsername() { return username_; }
+    
+    private void initFields() {
+    }
+    public final boolean isInitialized() {
+      if (!hasUsername) return false;
+      return true;
+    }
+    
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      if (hasUsername()) {
+        output.writeString(1, getUsername());
+      }
+      getUnknownFields().writeTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+    
+      size = 0;
+      if (hasUsername()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeStringSize(1, getUsername());
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+    
+    public static com.treegger.protobuf.WebSocketProto.VCardRequest parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.treegger.protobuf.WebSocketProto.VCardRequest parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.treegger.protobuf.WebSocketProto.VCardRequest parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.treegger.protobuf.WebSocketProto.VCardRequest parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.treegger.protobuf.WebSocketProto.VCardRequest parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.treegger.protobuf.WebSocketProto.VCardRequest parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.treegger.protobuf.WebSocketProto.VCardRequest parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static com.treegger.protobuf.WebSocketProto.VCardRequest parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static com.treegger.protobuf.WebSocketProto.VCardRequest parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.treegger.protobuf.WebSocketProto.VCardRequest parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(com.treegger.protobuf.WebSocketProto.VCardRequest prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+    
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> {
+      private com.treegger.protobuf.WebSocketProto.VCardRequest result;
+      
+      // Construct using com.treegger.protobuf.WebSocketProto.VCardRequest.newBuilder()
+      private Builder() {}
+      
+      private static Builder create() {
+        Builder builder = new Builder();
+        builder.result = new com.treegger.protobuf.WebSocketProto.VCardRequest();
+        return builder;
+      }
+      
+      protected com.treegger.protobuf.WebSocketProto.VCardRequest internalGetResult() {
+        return result;
+      }
+      
+      public Builder clear() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "Cannot call clear() after build().");
+        }
+        result = new com.treegger.protobuf.WebSocketProto.VCardRequest();
+        return this;
+      }
+      
+      public Builder clone() {
+        return create().mergeFrom(result);
+      }
+      
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.treegger.protobuf.WebSocketProto.VCardRequest.getDescriptor();
+      }
+      
+      public com.treegger.protobuf.WebSocketProto.VCardRequest getDefaultInstanceForType() {
+        return com.treegger.protobuf.WebSocketProto.VCardRequest.getDefaultInstance();
+      }
+      
+      public boolean isInitialized() {
+        return result.isInitialized();
+      }
+      public com.treegger.protobuf.WebSocketProto.VCardRequest build() {
+        if (result != null && !isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return buildPartial();
+      }
+      
+      private com.treegger.protobuf.WebSocketProto.VCardRequest buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        if (!isInitialized()) {
+          throw newUninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return buildPartial();
+      }
+      
+      public com.treegger.protobuf.WebSocketProto.VCardRequest buildPartial() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "build() has already been called on this Builder.");
+        }
+        com.treegger.protobuf.WebSocketProto.VCardRequest returnMe = result;
+        result = null;
+        return returnMe;
+      }
+      
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.treegger.protobuf.WebSocketProto.VCardRequest) {
+          return mergeFrom((com.treegger.protobuf.WebSocketProto.VCardRequest)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+      
+      public Builder mergeFrom(com.treegger.protobuf.WebSocketProto.VCardRequest other) {
+        if (other == com.treegger.protobuf.WebSocketProto.VCardRequest.getDefaultInstance()) return this;
+        if (other.hasUsername()) {
+          setUsername(other.getUsername());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+      
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder(
+            this.getUnknownFields());
+        while (true) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              this.setUnknownFields(unknownFields.build());
+              return this;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                this.setUnknownFields(unknownFields.build());
+                return this;
+              }
+              break;
+            }
+            case 10: {
+              setUsername(input.readString());
+              break;
+            }
+          }
+        }
+      }
+      
+      
+      // required string username = 1;
+      public boolean hasUsername() {
+        return result.hasUsername();
+      }
+      public java.lang.String getUsername() {
+        return result.getUsername();
+      }
+      public Builder setUsername(java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  result.hasUsername = true;
+        result.username_ = value;
+        return this;
+      }
+      public Builder clearUsername() {
+        result.hasUsername = false;
+        result.username_ = getDefaultInstance().getUsername();
+        return this;
+      }
+      
+      // @@protoc_insertion_point(builder_scope:com.treegger.protobuf.VCardRequest)
+    }
+    
+    static {
+      defaultInstance = new VCardRequest(true);
+      com.treegger.protobuf.WebSocketProto.internalForceInit();
+      defaultInstance.initFields();
+    }
+    
+    // @@protoc_insertion_point(class_scope:com.treegger.protobuf.VCardRequest)
+  }
+  
+  public static final class VCardResponse extends
+      com.google.protobuf.GeneratedMessage {
+    // Use VCardResponse.newBuilder() to construct.
+    private VCardResponse() {
+      initFields();
+    }
+    private VCardResponse(boolean noInit) {}
+    
+    private static final VCardResponse defaultInstance;
+    public static VCardResponse getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public VCardResponse getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.treegger.protobuf.WebSocketProto.internal_static_com_treegger_protobuf_VCardResponse_descriptor;
+    }
+    
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.treegger.protobuf.WebSocketProto.internal_static_com_treegger_protobuf_VCardResponse_fieldAccessorTable;
+    }
+    
+    // optional string fromUser = 1;
+    public static final int FROMUSER_FIELD_NUMBER = 1;
+    private boolean hasFromUser;
+    private java.lang.String fromUser_ = "";
+    public boolean hasFromUser() { return hasFromUser; }
+    public java.lang.String getFromUser() { return fromUser_; }
+    
+    // optional string fn = 2;
+    public static final int FN_FIELD_NUMBER = 2;
+    private boolean hasFn;
+    private java.lang.String fn_ = "";
+    public boolean hasFn() { return hasFn; }
+    public java.lang.String getFn() { return fn_; }
+    
+    // optional string nickname = 3;
+    public static final int NICKNAME_FIELD_NUMBER = 3;
+    private boolean hasNickname;
+    private java.lang.String nickname_ = "";
+    public boolean hasNickname() { return hasNickname; }
+    public java.lang.String getNickname() { return nickname_; }
+    
+    // optional string photoExternal = 4;
+    public static final int PHOTOEXTERNAL_FIELD_NUMBER = 4;
+    private boolean hasPhotoExternal;
+    private java.lang.String photoExternal_ = "";
+    public boolean hasPhotoExternal() { return hasPhotoExternal; }
+    public java.lang.String getPhotoExternal() { return photoExternal_; }
+    
+    private void initFields() {
+    }
+    public final boolean isInitialized() {
+      return true;
+    }
+    
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      if (hasFromUser()) {
+        output.writeString(1, getFromUser());
+      }
+      if (hasFn()) {
+        output.writeString(2, getFn());
+      }
+      if (hasNickname()) {
+        output.writeString(3, getNickname());
+      }
+      if (hasPhotoExternal()) {
+        output.writeString(4, getPhotoExternal());
+      }
+      getUnknownFields().writeTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+    
+      size = 0;
+      if (hasFromUser()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeStringSize(1, getFromUser());
+      }
+      if (hasFn()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeStringSize(2, getFn());
+      }
+      if (hasNickname()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeStringSize(3, getNickname());
+      }
+      if (hasPhotoExternal()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeStringSize(4, getPhotoExternal());
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+    
+    public static com.treegger.protobuf.WebSocketProto.VCardResponse parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.treegger.protobuf.WebSocketProto.VCardResponse parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.treegger.protobuf.WebSocketProto.VCardResponse parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.treegger.protobuf.WebSocketProto.VCardResponse parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.treegger.protobuf.WebSocketProto.VCardResponse parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.treegger.protobuf.WebSocketProto.VCardResponse parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.treegger.protobuf.WebSocketProto.VCardResponse parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static com.treegger.protobuf.WebSocketProto.VCardResponse parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static com.treegger.protobuf.WebSocketProto.VCardResponse parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.treegger.protobuf.WebSocketProto.VCardResponse parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(com.treegger.protobuf.WebSocketProto.VCardResponse prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+    
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> {
+      private com.treegger.protobuf.WebSocketProto.VCardResponse result;
+      
+      // Construct using com.treegger.protobuf.WebSocketProto.VCardResponse.newBuilder()
+      private Builder() {}
+      
+      private static Builder create() {
+        Builder builder = new Builder();
+        builder.result = new com.treegger.protobuf.WebSocketProto.VCardResponse();
+        return builder;
+      }
+      
+      protected com.treegger.protobuf.WebSocketProto.VCardResponse internalGetResult() {
+        return result;
+      }
+      
+      public Builder clear() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "Cannot call clear() after build().");
+        }
+        result = new com.treegger.protobuf.WebSocketProto.VCardResponse();
+        return this;
+      }
+      
+      public Builder clone() {
+        return create().mergeFrom(result);
+      }
+      
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.treegger.protobuf.WebSocketProto.VCardResponse.getDescriptor();
+      }
+      
+      public com.treegger.protobuf.WebSocketProto.VCardResponse getDefaultInstanceForType() {
+        return com.treegger.protobuf.WebSocketProto.VCardResponse.getDefaultInstance();
+      }
+      
+      public boolean isInitialized() {
+        return result.isInitialized();
+      }
+      public com.treegger.protobuf.WebSocketProto.VCardResponse build() {
+        if (result != null && !isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return buildPartial();
+      }
+      
+      private com.treegger.protobuf.WebSocketProto.VCardResponse buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        if (!isInitialized()) {
+          throw newUninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return buildPartial();
+      }
+      
+      public com.treegger.protobuf.WebSocketProto.VCardResponse buildPartial() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "build() has already been called on this Builder.");
+        }
+        com.treegger.protobuf.WebSocketProto.VCardResponse returnMe = result;
+        result = null;
+        return returnMe;
+      }
+      
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.treegger.protobuf.WebSocketProto.VCardResponse) {
+          return mergeFrom((com.treegger.protobuf.WebSocketProto.VCardResponse)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+      
+      public Builder mergeFrom(com.treegger.protobuf.WebSocketProto.VCardResponse other) {
+        if (other == com.treegger.protobuf.WebSocketProto.VCardResponse.getDefaultInstance()) return this;
+        if (other.hasFromUser()) {
+          setFromUser(other.getFromUser());
+        }
+        if (other.hasFn()) {
+          setFn(other.getFn());
+        }
+        if (other.hasNickname()) {
+          setNickname(other.getNickname());
+        }
+        if (other.hasPhotoExternal()) {
+          setPhotoExternal(other.getPhotoExternal());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+      
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder(
+            this.getUnknownFields());
+        while (true) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              this.setUnknownFields(unknownFields.build());
+              return this;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                this.setUnknownFields(unknownFields.build());
+                return this;
+              }
+              break;
+            }
+            case 10: {
+              setFromUser(input.readString());
+              break;
+            }
+            case 18: {
+              setFn(input.readString());
+              break;
+            }
+            case 26: {
+              setNickname(input.readString());
+              break;
+            }
+            case 34: {
+              setPhotoExternal(input.readString());
+              break;
+            }
+          }
+        }
+      }
+      
+      
+      // optional string fromUser = 1;
+      public boolean hasFromUser() {
+        return result.hasFromUser();
+      }
+      public java.lang.String getFromUser() {
+        return result.getFromUser();
+      }
+      public Builder setFromUser(java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  result.hasFromUser = true;
+        result.fromUser_ = value;
+        return this;
+      }
+      public Builder clearFromUser() {
+        result.hasFromUser = false;
+        result.fromUser_ = getDefaultInstance().getFromUser();
+        return this;
+      }
+      
+      // optional string fn = 2;
+      public boolean hasFn() {
+        return result.hasFn();
+      }
+      public java.lang.String getFn() {
+        return result.getFn();
+      }
+      public Builder setFn(java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  result.hasFn = true;
+        result.fn_ = value;
+        return this;
+      }
+      public Builder clearFn() {
+        result.hasFn = false;
+        result.fn_ = getDefaultInstance().getFn();
+        return this;
+      }
+      
+      // optional string nickname = 3;
+      public boolean hasNickname() {
+        return result.hasNickname();
+      }
+      public java.lang.String getNickname() {
+        return result.getNickname();
+      }
+      public Builder setNickname(java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  result.hasNickname = true;
+        result.nickname_ = value;
+        return this;
+      }
+      public Builder clearNickname() {
+        result.hasNickname = false;
+        result.nickname_ = getDefaultInstance().getNickname();
+        return this;
+      }
+      
+      // optional string photoExternal = 4;
+      public boolean hasPhotoExternal() {
+        return result.hasPhotoExternal();
+      }
+      public java.lang.String getPhotoExternal() {
+        return result.getPhotoExternal();
+      }
+      public Builder setPhotoExternal(java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  result.hasPhotoExternal = true;
+        result.photoExternal_ = value;
+        return this;
+      }
+      public Builder clearPhotoExternal() {
+        result.hasPhotoExternal = false;
+        result.photoExternal_ = getDefaultInstance().getPhotoExternal();
+        return this;
+      }
+      
+      // @@protoc_insertion_point(builder_scope:com.treegger.protobuf.VCardResponse)
+    }
+    
+    static {
+      defaultInstance = new VCardResponse(true);
+      com.treegger.protobuf.WebSocketProto.internalForceInit();
+      defaultInstance.initFields();
+    }
+    
+    // @@protoc_insertion_point(class_scope:com.treegger.protobuf.VCardResponse)
   }
   
   public static final class Roster extends
@@ -4650,6 +5524,16 @@ public final class WebSocketProto {
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_treegger_protobuf_BindResponse_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_treegger_protobuf_VCardRequest_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_com_treegger_protobuf_VCardRequest_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_treegger_protobuf_VCardResponse_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_com_treegger_protobuf_VCardResponse_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_treegger_protobuf_Roster_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
@@ -4679,7 +5563,7 @@ public final class WebSocketProto {
   static {
     java.lang.String[] descriptorData = {
       "\n\024WebSocketProto.proto\022\025com.treegger.pro" +
-      "tobuf\"\340\003\n\020WebSocketMessage\022)\n\004ping\030\001 \001(\013" +
+      "tobuf\"\330\004\n\020WebSocketMessage\022)\n\004ping\030\001 \001(\013" +
       "2\033.com.treegger.protobuf.Ping\022G\n\023authent" +
       "icateRequest\030\002 \001(\0132*.com.treegger.protob" +
       "uf.AuthenticateRequest\022I\n\024authenticateRe" +
@@ -4691,24 +5575,31 @@ public final class WebSocketProto {
       "gger.protobuf.Roster\0221\n\010presence\030\007 \001(\0132\037" +
       ".com.treegger.protobuf.Presence\0227\n\013textM" +
       "essage\030\010 \001(\0132\".com.treegger.protobuf.Tex" +
-      "tMessage\"*\n\005Error\022\014\n\004code\030\001 \002(\r\022\023\n\013descr" +
-      "iption\030\002 \001(\t\"\022\n\004Ping\022\n\n\002id\030\001 \001(\t\"K\n\023Auth" +
+      "tMessage\0229\n\014vcardRequest\030\t \001(\0132#.com.tre" +
+      "egger.protobuf.VCardRequest\022;\n\rvcardResp" +
+      "onse\030\n \001(\0132$.com.treegger.protobuf.VCard" +
+      "Response\"*\n\005Error\022\014\n\004code\030\001 \002(\r\022\023\n\013descr" +
+      "iption\030\002 \001(\t\"\022\n\004Ping\022\n\n\002id\030\001 \001(\t\"^\n\023Auth" +
       "enticateRequest\022\020\n\010username\030\001 \002(\t\022\020\n\010pas" +
-      "sword\030\002 \002(\t\022\020\n\010resource\030\003 \002(\t\"Q\n\024Authent" +
-      "icateResponse\022\020\n\010username\030\001 \002(\t\022\021\n\tsessi" +
-      "onId\030\002 \001(\t\022\024\n\014errorMessage\030\003 \001(\t\" \n\013Bind" +
-      "Request\022\021\n\tsessionId\030\001 \002(\t\"!\n\014BindRespon",
-      "se\022\021\n\tsessionId\030\001 \001(\t\"9\n\006Roster\022/\n\004item\030" +
-      "\001 \003(\0132!.com.treegger.protobuf.RosterItem" +
-      "\"P\n\nRosterItem\022\014\n\004name\030\001 \002(\t\022\013\n\003jid\030\002 \002(" +
-      "\t\022\024\n\014subscription\030\003 \002(\t\022\021\n\titemGroup\030\004 \002" +
-      "(\t\"D\n\010Presence\022\014\n\004from\030\001 \002(\t\022\014\n\004type\030\002 \001" +
-      "(\t\022\014\n\004show\030\003 \001(\t\022\016\n\006status\030\004 \001(\t\"\313\001\n\013Tex" +
-      "tMessage\022\n\n\002id\030\001 \001(\t\022\016\n\006toUser\030\002 \001(\t\022\020\n\010" +
-      "fromUser\030\003 \001(\t\022\014\n\004type\030\004 \001(\t\022\017\n\007subject\030" +
-      "\005 \001(\t\022\014\n\004body\030\006 \001(\t\022\016\n\006thread\030\007 \001(\t\022\016\n\006a" +
-      "ctive\030\010 \001(\010\022\021\n\tcomposing\030\t \001(\010\022\016\n\006paused",
-      "\030\n \001(\010\022\020\n\010inactive\030\013 \001(\010\022\014\n\004gone\030\014 \001(\010"
+      "sword\030\002 \002(\t\022\020\n\010resource\030\003 \002(\t\022\021\n\tsession",
+      "Id\030\004 \001(\t\"Q\n\024AuthenticateResponse\022\020\n\010user" +
+      "name\030\001 \002(\t\022\021\n\tsessionId\030\002 \001(\t\022\024\n\014errorMe" +
+      "ssage\030\003 \001(\t\" \n\013BindRequest\022\021\n\tsessionId\030" +
+      "\001 \002(\t\"!\n\014BindResponse\022\021\n\tsessionId\030\001 \001(\t" +
+      "\" \n\014VCardRequest\022\020\n\010username\030\001 \002(\t\"V\n\rVC" +
+      "ardResponse\022\020\n\010fromUser\030\001 \001(\t\022\n\n\002fn\030\002 \001(" +
+      "\t\022\020\n\010nickname\030\003 \001(\t\022\025\n\rphotoExternal\030\004 \001" +
+      "(\t\"9\n\006Roster\022/\n\004item\030\001 \003(\0132!.com.treegge" +
+      "r.protobuf.RosterItem\"P\n\nRosterItem\022\014\n\004n" +
+      "ame\030\001 \002(\t\022\013\n\003jid\030\002 \002(\t\022\024\n\014subscription\030\003",
+      " \002(\t\022\021\n\titemGroup\030\004 \002(\t\"D\n\010Presence\022\014\n\004f" +
+      "rom\030\001 \002(\t\022\014\n\004type\030\002 \001(\t\022\014\n\004show\030\003 \001(\t\022\016\n" +
+      "\006status\030\004 \001(\t\"\313\001\n\013TextMessage\022\n\n\002id\030\001 \001(" +
+      "\t\022\016\n\006toUser\030\002 \001(\t\022\020\n\010fromUser\030\003 \001(\t\022\014\n\004t" +
+      "ype\030\004 \001(\t\022\017\n\007subject\030\005 \001(\t\022\014\n\004body\030\006 \001(\t" +
+      "\022\016\n\006thread\030\007 \001(\t\022\016\n\006active\030\010 \001(\010\022\021\n\tcomp" +
+      "osing\030\t \001(\010\022\016\n\006paused\030\n \001(\010\022\020\n\010inactive\030" +
+      "\013 \001(\010\022\014\n\004gone\030\014 \001(\010"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -4720,7 +5611,7 @@ public final class WebSocketProto {
           internal_static_com_treegger_protobuf_WebSocketMessage_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_treegger_protobuf_WebSocketMessage_descriptor,
-              new java.lang.String[] { "Ping", "AuthenticateRequest", "AuthenticateResponse", "BindRequest", "BindResponse", "Roster", "Presence", "TextMessage", },
+              new java.lang.String[] { "Ping", "AuthenticateRequest", "AuthenticateResponse", "BindRequest", "BindResponse", "Roster", "Presence", "TextMessage", "VcardRequest", "VcardResponse", },
               com.treegger.protobuf.WebSocketProto.WebSocketMessage.class,
               com.treegger.protobuf.WebSocketProto.WebSocketMessage.Builder.class);
           internal_static_com_treegger_protobuf_Error_descriptor =
@@ -4744,7 +5635,7 @@ public final class WebSocketProto {
           internal_static_com_treegger_protobuf_AuthenticateRequest_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_treegger_protobuf_AuthenticateRequest_descriptor,
-              new java.lang.String[] { "Username", "Password", "Resource", },
+              new java.lang.String[] { "Username", "Password", "Resource", "SessionId", },
               com.treegger.protobuf.WebSocketProto.AuthenticateRequest.class,
               com.treegger.protobuf.WebSocketProto.AuthenticateRequest.Builder.class);
           internal_static_com_treegger_protobuf_AuthenticateResponse_descriptor =
@@ -4771,8 +5662,24 @@ public final class WebSocketProto {
               new java.lang.String[] { "SessionId", },
               com.treegger.protobuf.WebSocketProto.BindResponse.class,
               com.treegger.protobuf.WebSocketProto.BindResponse.Builder.class);
-          internal_static_com_treegger_protobuf_Roster_descriptor =
+          internal_static_com_treegger_protobuf_VCardRequest_descriptor =
             getDescriptor().getMessageTypes().get(7);
+          internal_static_com_treegger_protobuf_VCardRequest_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_treegger_protobuf_VCardRequest_descriptor,
+              new java.lang.String[] { "Username", },
+              com.treegger.protobuf.WebSocketProto.VCardRequest.class,
+              com.treegger.protobuf.WebSocketProto.VCardRequest.Builder.class);
+          internal_static_com_treegger_protobuf_VCardResponse_descriptor =
+            getDescriptor().getMessageTypes().get(8);
+          internal_static_com_treegger_protobuf_VCardResponse_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_treegger_protobuf_VCardResponse_descriptor,
+              new java.lang.String[] { "FromUser", "Fn", "Nickname", "PhotoExternal", },
+              com.treegger.protobuf.WebSocketProto.VCardResponse.class,
+              com.treegger.protobuf.WebSocketProto.VCardResponse.Builder.class);
+          internal_static_com_treegger_protobuf_Roster_descriptor =
+            getDescriptor().getMessageTypes().get(9);
           internal_static_com_treegger_protobuf_Roster_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_treegger_protobuf_Roster_descriptor,
@@ -4780,7 +5687,7 @@ public final class WebSocketProto {
               com.treegger.protobuf.WebSocketProto.Roster.class,
               com.treegger.protobuf.WebSocketProto.Roster.Builder.class);
           internal_static_com_treegger_protobuf_RosterItem_descriptor =
-            getDescriptor().getMessageTypes().get(8);
+            getDescriptor().getMessageTypes().get(10);
           internal_static_com_treegger_protobuf_RosterItem_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_treegger_protobuf_RosterItem_descriptor,
@@ -4788,7 +5695,7 @@ public final class WebSocketProto {
               com.treegger.protobuf.WebSocketProto.RosterItem.class,
               com.treegger.protobuf.WebSocketProto.RosterItem.Builder.class);
           internal_static_com_treegger_protobuf_Presence_descriptor =
-            getDescriptor().getMessageTypes().get(9);
+            getDescriptor().getMessageTypes().get(11);
           internal_static_com_treegger_protobuf_Presence_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_treegger_protobuf_Presence_descriptor,
@@ -4796,7 +5703,7 @@ public final class WebSocketProto {
               com.treegger.protobuf.WebSocketProto.Presence.class,
               com.treegger.protobuf.WebSocketProto.Presence.Builder.class);
           internal_static_com_treegger_protobuf_TextMessage_descriptor =
-            getDescriptor().getMessageTypes().get(10);
+            getDescriptor().getMessageTypes().get(12);
           internal_static_com_treegger_protobuf_TextMessage_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_treegger_protobuf_TextMessage_descriptor,

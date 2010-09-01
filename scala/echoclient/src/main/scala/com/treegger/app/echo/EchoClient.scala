@@ -9,6 +9,14 @@ import com.treegger.protobuf.WebSocketProto._
 import java.util.Properties
 import java.io.FileInputStream
 
+object EchoClient {
+  def main(args : Array[String]) : Unit = 
+  {
+      new EchoClient().launch()
+  }
+}
+
+
 class EchoClient 
 {
 
@@ -25,7 +33,7 @@ class EchoClient
         {
             try
             {
-                wsConnector.connect(  "wss", "xmpp.treegger.com", 443, "/tg-1.0" , handler )
+                wsConnector.connect(  "wss", "localhost", 8443, "/tg-1.0" , handler )
                 
                 while( !handler.open )
                 {
@@ -85,17 +93,19 @@ class EchoClient
             else if( data.hasTextMessage )
             {
                 val textMessage = data.getTextMessage
-		if( textMessage.hasBody )
-		{
+        		if( textMessage.hasBody )
+        		{
                 	println("Echo to: " + textMessage.getFromUser )
                 	sendMessage( textMessage.getFromUser, textMessage.getBody )
-		}
+        		}
             }
         }
 
 
         def onError(e:Exception)
         {
+            println( "Error" )
+            e.printStackTrace()
         }
 
         def onClose()
@@ -103,6 +113,10 @@ class EchoClient
             open = false
         }
 
+        def onStop()
+        {
+            println( "Stopped" )
+        }
             
 
         private def authenticate()
