@@ -8,17 +8,23 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 
 import javax.net.SocketFactory;
+import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.X509TrustManager;
 
 public class WSConnector 
 {
 
 	private WSReader wsReader;
-	public void connect( String scheme, String host, int port, String path, WSEventHandler wsEventHandler ) throws IOException
+	public void connect( String scheme, String host, int port, String path, boolean trustAnyCertificate, WSEventHandler wsEventHandler ) throws IOException
 	{
-        wsReader = new WSReader( scheme, host, port, path, wsEventHandler );
+        wsReader = new WSReader( scheme, host, port, path, trustAnyCertificate, wsEventHandler );
 	    wsReader.start();
         
 	}
@@ -65,7 +71,7 @@ public class WSConnector
 	
 	public void close() throws IOException
 	{
-	    if( wsReader.socket != null ) wsReader.socket.close();
+	    wsReader.disconnect();
 	}
 	
 	
@@ -99,17 +105,39 @@ public class WSConnector
     	private int port;
     	private String path;
     	
-        public WSReader( String scheme, String host, int port, String path, WSEventHandler eventHandler )
+    	private boolean trustAnyCertificate = true;
+    	
+    	private boolean running = false;
+    	
+        public WSReader( String scheme, String host, int port, String path, boolean trustAnyCertificate, WSEventHandler eventHandler )
         {
+            setName( "WSConnector" );
             this.scheme = scheme;
             this.host = host;
             this.port = port;
             this.path = path;
-            this.eventHandler = eventHandler;                
+            this.trustAnyCertificate = trustAnyCertificate;
+            this.eventHandler = eventHandler;
+            
+            running = true;
+        }
+
+        
+        
+
+
+        public void disconnect() throws IOException
+        {
+            running = false;
+            synchronized ( this )
+            {
+                eventHandler = null;
+            }
+            if( socket != null ) socket.close();
+            interrupt();
         }
         
-        
-        private void connect() throws UnknownHostException, IOException
+        private void connect() throws UnknownHostException, IOException, KeyManagementException, NoSuchAlgorithmException
         {
             if( scheme.equals("ws") ) 
             {
@@ -124,9 +152,36 @@ public class WSConnector
                 if (port == -1) {
                     port = 443;
                 }
-                SocketFactory factory = SSLSocketFactory.getDefault();
+                SocketFactory factory;
+                if( trustAnyCertificate )
+                {
+                    SSLContext context = SSLContext.getInstance( "TLS" );
+                    context.init( null, new X509TrustManager[] { new X509TrustManager()
+                    {
+                        public void checkClientTrusted( X509Certificate[] chain, String authType )
+                            throws CertificateException
+                        {
+                        }
+
+                        public void checkServerTrusted( X509Certificate[] chain, String authType )
+                            throws CertificateException
+                        {
+                        }
+
+                        public X509Certificate[] getAcceptedIssuers()
+                        {
+                            return new X509Certificate[0];
+                        }
+                    } }, null );
+                    
+                    factory = (SSLSocketFactory) context.getSocketFactory ();
+                }
+                else
+                    factory = SSLSocketFactory.getDefault();
+                
                 socket = factory.createSocket( host, port );
             }
+            
             
 
             input = socket.getInputStream();
@@ -159,23 +214,35 @@ public class WSConnector
             {
                 connect();
 
-                eventHandler.onOpen();
+                synchronized ( this )
+                {
+                    if( eventHandler != null ) eventHandler.onOpen();
+                }    
 
-                while (true)
+                while (running)
                 {
                 	int b = input.read();
                 	if( b == -1 )
                 	{
-                		eventHandler.onClose();
+                        synchronized ( this )
+                        {
+                            if( eventHandler != null ) eventHandler.onClose();
+                        }
                 		break;
                 	}
                 	if (b == 0x00) 
                 	{
-                		eventHandler.onMessage(  decodeTextFrame() );
+                        synchronized ( this )
+                        {
+                            if( eventHandler != null ) eventHandler.onMessage(  decodeTextFrame() );
+                        }
                 	}
                 	else if( b == 0x80 )
                 	{
-                		eventHandler.onMessage(  decodeBinaryFrame() );
+                        synchronized ( this )
+                        {
+                            if( eventHandler != null ) eventHandler.onMessage(  decodeBinaryFrame() );
+                        }
                 	}
                 	else
                 	{
@@ -185,25 +252,15 @@ public class WSConnector
             }
             catch ( Exception e )
             {
-                eventHandler.onError( e );
+                synchronized ( this )
+                {
+                    if( eventHandler != null ) eventHandler.onError( e );
+                }
             }
-/*
- *                  }
-                    catch (IOException e) 
-                    {
-                        eventHandler.onClose();
-                        try 
-                        {
-                            input.close();
-                        } catch (IOException e1) 
-                        {
-                        }
-                        eventHandler.onError( e );
-                        break;
-                    }
-*/
-            
-            eventHandler.onStop();
+            synchronized ( this )
+            {            
+                if( eventHandler != null ) eventHandler.onStop();
+            }
         }
         
         private byte[] decodeBinaryFrame() throws IOException {
