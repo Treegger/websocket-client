@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -134,7 +135,10 @@ public class WSConnector
                 eventHandler = null;
             }
             if( socket != null ) socket.close();
-            interrupt();
+            if( Thread.currentThread() != this )
+            {
+                interrupt();
+            }
         }
         
         private void connect() throws UnknownHostException, IOException, KeyManagementException, NoSuchAlgorithmException
@@ -205,6 +209,8 @@ public class WSConnector
                 throw new IOException("unable to connect to server");
             }
             
+            // workaround for android issu => close on socket doesnt throw ex. 
+            socket.setSoTimeout( 5000 );
         }
         
         
@@ -221,33 +227,43 @@ public class WSConnector
 
                 while (running)
                 {
-                	int b = input.read();
-                	if( b == -1 )
-                	{
-                        synchronized ( this )
+                    try
+                    {
+                        int b = input.read();
+                        if( running )
                         {
-                            if( eventHandler != null ) eventHandler.onClose();
+                        	if( b == -1 )
+                        	{
+                                synchronized ( this )
+                                {
+                                    if( eventHandler != null ) eventHandler.onClose();
+                                }
+                        		break;
+                        	}
+                        	if (b == 0x00) 
+                        	{
+                                synchronized ( this )
+                                {
+                                    if( eventHandler != null ) eventHandler.onMessage(  decodeTextFrame() );
+                                }
+                        	}
+                        	else if( b == 0x80 )
+                        	{
+                                synchronized ( this )
+                                {
+                                    if( eventHandler != null ) eventHandler.onMessage(  decodeBinaryFrame() );
+                                }
+                        	}
+                        	else
+                        	{
+                        		throw new IOException( "Unexpected byte: " + Integer.toHexString(b) );
+                        	}
                         }
-                		break;
-                	}
-                	if (b == 0x00) 
-                	{
-                        synchronized ( this )
-                        {
-                            if( eventHandler != null ) eventHandler.onMessage(  decodeTextFrame() );
-                        }
-                	}
-                	else if( b == 0x80 )
-                	{
-                        synchronized ( this )
-                        {
-                            if( eventHandler != null ) eventHandler.onMessage(  decodeBinaryFrame() );
-                        }
-                	}
-                	else
-                	{
-                		throw new IOException( "Unexpected byte: " + Integer.toHexString(b) );
-                	}
+                    }
+                    // workaround for android issu => close on socket doesnt throw ex. 
+                    catch( SocketTimeoutException e )
+                    {
+                    }
                 }
             }
             catch ( Exception e )
