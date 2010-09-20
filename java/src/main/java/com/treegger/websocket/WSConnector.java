@@ -187,6 +187,10 @@ public class WSConnector
             }
             
             
+            socket.setTcpNoDelay( true );
+
+            // workaround for android issu => close on socket doesnt throw ex. 
+            socket.setSoTimeout( 5000 );
 
             input = socket.getInputStream();
         
@@ -209,8 +213,6 @@ public class WSConnector
                 throw new IOException("unable to connect to server");
             }
             
-            // workaround for android issu => close on socket doesnt throw ex. 
-            socket.setSoTimeout( 5000 );
         }
         
         
