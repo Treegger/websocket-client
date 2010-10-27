@@ -304,13 +304,13 @@ public class WSConnector
         private String decodeTextFrame() throws IOException 
         {
         	boas.reset();
-        	byte b;
+        	int b;
         	do 
         	{
-                b = (byte)input.read();
-                boas.write( b );
+                b = input.read();
+                boas.write( (byte)b );
             } 
-        	while( (b & 0xFF) == 0xFF );
+        	while( b != 0xFF );
         	
         	return boas.toString();
         }
