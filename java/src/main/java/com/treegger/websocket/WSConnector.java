@@ -305,12 +305,12 @@ public class WSConnector
         {
         	boas.reset();
         	int b;
-        	do 
+        	while( true )
         	{
                 b = input.read();
+                if( b == 0xFF ) break;
                 boas.write( (byte)b );
             } 
-        	while( b != 0xFF );
         	
         	return boas.toString();
         }
